@@ -10,17 +10,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SubmitButton from "./submit-button";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { previewState, uploadStatusState } from "@/atoms/ocr-state";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { imageState, previewState } from "@/atoms/ocr";
 import Image from "next/image";
 
 const ImageUploadForm = () => {
   const [preview, setPreview] = useRecoilState(previewState);
-  const uploadStatus = useRecoilValue(uploadStatusState);
+  const setImage = useSetRecoilState(imageState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
+      setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string);
@@ -68,9 +69,6 @@ const ImageUploadForm = () => {
                 className="max-w-full h-auto rounded-lg border border-gray-200"
               />
             </div>
-          )}
-          {uploadStatus && (
-            <p className="text-sm text-green-600">{uploadStatus}</p>
           )}
         </div>
         <CardFooter className="px-0 pt-6">
