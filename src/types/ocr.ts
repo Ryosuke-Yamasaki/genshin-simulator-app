@@ -1,15 +1,14 @@
 type ArtifactImportData = {
   name: string;
-  mainOption: string;
-  quality: string;
-  subOption1: SubOption;
-  subOption2: SubOption;
-  subOption3: SubOption;
-  subOption4: SubOption;
-  [key: string]: string | SubOption;
+  mainOption: Status;
+  subOption1: Status;
+  subOption2: Status;
+  subOption3: Status;
+  subOption4: Status;
+  [key: string]: string | Status;
 };
 
-type SubOption = {
+type Status = {
   attribute: string;
   value: string;
 };

@@ -42,8 +42,8 @@ const parseSubOption = (text: string) => {
 export const importArtifactData = async (imagePath: string) => {
   const regions = {
     name: { x: 1307, y: 120, width: 593, height: 58 },
-    mainOption: { x: 1307, y: 267, width: 273, height: 30 },
-    quality: { x: 1307, y: 297, width: 273, height: 53 },
+    mainOptionAttribute: { x: 1307, y: 267, width: 273, height: 30 },
+    mainOptionValue: { x: 1307, y: 297, width: 273, height: 53 },
     subOption1: { x: 1355, y: 475, width: 445, height: 39 },
     subOption2: { x: 1355, y: 514, width: 445, height: 39 },
     subOption3: { x: 1355, y: 553, width: 445, height: 39 },
@@ -76,6 +76,10 @@ export const importArtifactData = async (imagePath: string) => {
           } else {
             artifactData[key] = { attribute: text, value: "" };
           }
+        } else if (key === "mainOptionAttribute") {
+          artifactData.mainOption = { attribute: text, value: "" };
+        } else if (key === "mainOptionValue") {
+          artifactData.mainOption.value = text;
         } else {
           artifactData[key] = text;
         }
