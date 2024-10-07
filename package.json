@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "schema": "prisma-case-format -f prisma/schema.prisma -c prisma/schema.prisma-case-format"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.3",
