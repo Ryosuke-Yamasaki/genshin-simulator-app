@@ -67,9 +67,9 @@ model VerificationToken {
 
 model Artifacter {
   id           String      @id @default(cuid())
-  userId       String
-  artifactId   String
-  mainOptionId String
+  userId       String      @map("user_id")
+  artifactId   String      @map("artifact_id")
+  mainOptionId String      @map("main_option_id")
   subOptions   SubOption[]
 
   mainOption MainOption @relation(fields: [mainOptionId], references: [id])
@@ -82,8 +82,8 @@ model Artifacter {
 model Artifact {
   id          String       @id
   name        String
-  setId       String
-  typeId      String
+  setId       String       @map("set_id")
+  typeId      String       @map("type_id")
   image       String
   artifacters Artifacter[]
 
@@ -121,7 +121,7 @@ model MainOption {
 
 model SubOption {
   id           String @id @default(cuid())
-  artifacterId String
+  artifacterId String @map("artifacter_id")
   attribute    String
   value        String
 
