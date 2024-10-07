@@ -1,0 +1,19 @@
+uses_next_auth: false
+default: 'table=pascal; mapTable=snake,plural; field=pascal; mapField=snake; enum=pascal; mapEnum=pascal'
+override:
+  Account:
+    default: 'table=pascal; mapTable=snake,plural;'
+    field:
+      id:                'field=camel; mapField=camel'
+      userId:            'field=camel; mapField=snake'
+      type:              'field=camel; mapField=camel'
+      provider:          'field=camel; mapField=camel'
+      providerAccountId: 'field=camel; mapField=snake'
+      refresh_token:     'field=snake; mapField=snake'
+      access_token:      'field=snake; mapField=snake'
+      expires_at:        'field=snake; mapField=snake'
+      token_type:        'field=snake; mapField=snake'
+      scope:             'field=snake; mapField=snake'
+      id_token:          'field=snake; mapField=snake'
+      session_state:     'field=snake; mapField=snake'
+      user:              'field=snake; mapField=snake'
