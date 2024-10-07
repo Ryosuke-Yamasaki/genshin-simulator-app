@@ -81,10 +81,10 @@ model Artifacter {
 
 model Artifact {
   id          String       @id
-  name        String
+  nameJp      String       @map("name_jp")
+  nameEn      String       @map("name_en")
   setId       String       @map("set_id")
   typeId      String       @map("type_id")
-  image       String
   artifacters Artifacter[]
 
   set  ArtifactSet  @relation(fields: [setId], references: [id])
@@ -95,7 +95,8 @@ model Artifact {
 
 model ArtifactSet {
   id        String     @id
-  name      String
+  nameJp    String     @map("name_jp")
+  nameEn    String     @map("name_en")
   artifacts Artifact[]
 
   @@map("artifact_sets")
@@ -103,7 +104,8 @@ model ArtifactSet {
 
 model ArtifactType {
   id        String     @id
-  name      String
+  nameJp    String     @map("name_jp")
+  nameEn    String     @map("name_en")
   artifacts Artifact[]
 
   @@map("artifact_types")
