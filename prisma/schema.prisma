@@ -44,13 +44,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?      @unique
+  emailVerified DateTime?    @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
+  artifacters   Artifacter[]
 
   @@map("users")
 }
@@ -62,4 +63,69 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Artifacter {
+  id           String      @id @default(cuid())
+  userId       String
+  artifactId   String
+  mainOptionId String
+  subOptions   SubOption[]
+
+  mainOption MainOption @relation(fields: [mainOptionId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+  artifact   Artifact   @relation(fields: [artifactId], references: [id])
+
+  @@map("artifacters")
+}
+
+model Artifact {
+  id          String       @id
+  name        String
+  setId       String
+  typeId      String
+  image       String
+  artifacters Artifacter[]
+
+  set  ArtifactSet  @relation(fields: [setId], references: [id])
+  type ArtifactType @relation(fields: [typeId], references: [id])
+
+  @@map("artifacts")
+}
+
+model ArtifactSet {
+  id        String     @id
+  name      String
+  artifacts Artifact[]
+
+  @@map("artifact_sets")
+}
+
+model ArtifactType {
+  id        String     @id
+  name      String
+  artifacts Artifact[]
+
+  @@map("artifact_types")
+}
+
+model MainOption {
+  id          String       @id
+  rarity      String
+  attribute   String
+  value       String
+  artifacters Artifacter[]
+
+  @@map("main_options")
+}
+
+model SubOption {
+  id           String @id @default(cuid())
+  artifacterId String
+  attribute    String
+  value        String
+
+  artifacter Artifacter @relation(fields: [artifacterId], references: [id])
+
+  @@map("sub_options")
 }
