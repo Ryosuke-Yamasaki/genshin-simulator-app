@@ -23,9 +23,6 @@ const parseSubOption = (text: string) => {
 
   if (match) {
     const attribute = match[1].trim();
-    if (match[2].includes("%")) {
-      match[2] = (parseFloat(match[2]) / 100).toFixed(3).toString();
-    }
     const value = match[2];
     return { attribute, value };
   }
