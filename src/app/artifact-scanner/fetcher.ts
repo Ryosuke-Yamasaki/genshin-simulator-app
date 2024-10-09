@@ -3,9 +3,11 @@ import "server-only";
 
 export const fetchArtifacts = async () => {
   const artifacts = await prisma.artifact.findMany({
-    include: {
-      set: true,
-      type: true,
+    select: {
+      id: true,
+      nameJp: true,
+      nameEn: true,
+      set: { select: { id: true, nameJp: true, nameEn: true } },
     },
   });
 
