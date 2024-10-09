@@ -1,8 +1,9 @@
 import { artifactDataState, imageState, previewState } from "@/atoms/ocr";
 import { Button } from "@/components/ui/button";
-import { importArtifactData } from "@/lib/utils";
+
 import { useTransition } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { importArtifactData } from "../lib/utils";
 
 const SubmitButton = () => {
   const preview = useRecoilValue(previewState);
@@ -16,7 +17,7 @@ const SubmitButton = () => {
         const imagePath = URL.createObjectURL(image);
         const data = (await importArtifactData(
           imagePath
-        )) as ArtifactImportData;
+        )) as ImportArtifactData;
         setArtifactData(data);
         console.log(data);
       }

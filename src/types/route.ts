@@ -1,4 +1,4 @@
-type ArtifactImportData = {
+type ImportArtifactData = {
   name: string;
   mainOption: Status;
   subOption1: Status;
