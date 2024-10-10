@@ -48,7 +48,7 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
         </PopoverTrigger>
         <PopoverContent className="w-[398px] p-0">
           <Command>
-            <CommandList>
+            <CommandList className="overscroll-none">
               <div className="px-2 py-1.5">
                 <ToggleGroup
                   type="multiple"
