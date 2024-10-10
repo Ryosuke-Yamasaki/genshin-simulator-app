@@ -17,14 +17,16 @@ import ArtifactSetSelector from "./ui/artifact-set-selector";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
+  artifactTypes: artifactType[];
 }
 
 const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   artifactSets,
+  artifactTypes,
 }) => {
   console.log(artifactSets);
+  console.log(artifactTypes);
 
-  const equippedParts = ["Flower", "Plume", "Sands", "Goblet", "Circlet"];
   const attributes = [
     "HP",
     "ATK",
@@ -62,9 +64,9 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
               <SelectValue placeholder="Select equipped part" />
             </SelectTrigger>
             <SelectContent>
-              {equippedParts.map((part) => (
-                <SelectItem key={part} value={part}>
-                  {part}
+              {artifactTypes.map((type) => (
+                <SelectItem key={type.id} value={type.id}>
+                  {type.nameJp}
                 </SelectItem>
               ))}
             </SelectContent>
