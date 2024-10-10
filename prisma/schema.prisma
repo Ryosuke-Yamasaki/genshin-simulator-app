@@ -125,10 +125,20 @@ model MainOption {
 model SubOption {
   id           String @id @default(cuid())
   artifacterId String @map("artifacter_id")
-  attribute    String
+  subStatusId  String @map("sub_status_id")
   value        String
 
   artifacter Artifacter @relation(fields: [artifacterId], references: [id])
+  subStatus  SubStatus  @relation(fields: [subStatusId], references: [id])
 
   @@map("sub_options")
+}
+
+model SubStatus {
+  id         String      @id
+  nameJp     String      @map("name_jp")
+  nameEn     String      @map("name_en")
+  subOptions SubOption[]
+
+  @@map("sub_statuses")
 }
