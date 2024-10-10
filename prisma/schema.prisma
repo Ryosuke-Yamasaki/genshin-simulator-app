@@ -114,7 +114,7 @@ model ArtifactType {
 
 model MainOption {
   id          String       @id
-  rarity      String
+  quality     Int
   attribute   String
   value       String
   artifacters Artifacter[]
