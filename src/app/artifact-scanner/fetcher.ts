@@ -22,9 +22,3 @@ export const fetchArtifactSets = async () => {
 
   return artifactSets;
 };
-
-export const fetchArtifactTypes = async () => {
-  const artifactSets = await prisma.artifactType.findMany();
-
-  return artifactSets;
-};

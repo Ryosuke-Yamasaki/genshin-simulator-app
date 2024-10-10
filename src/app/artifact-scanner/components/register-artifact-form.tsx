@@ -14,18 +14,16 @@ import {
 import FormWrapper from "./form-wrapper";
 import FormLabel from "./ui/form-label";
 import ArtifactSetSelector from "./ui/artifact-set-selector";
+import { artifactTypes } from "../data/artifact-data";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
-  artifactTypes: artifactType[];
 }
 
 const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   artifactSets,
-  artifactTypes,
 }) => {
   console.log(artifactSets);
-  console.log(artifactTypes);
 
   const attributes = [
     "HP",
