@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,16 +11,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import FormWrapper from "./form-wrapper";
 import FormLabel from "./ui/form-label";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import ArtifactSetSelector from "./ui/artifact-set-selector";
 
-const RegisterArtifactFrom = () => {
-  const setEffects = [
-    "Gladiator's Finale",
-    "Wanderer's Troupe",
-    "Noblesse Oblige",
-    "Viridescent Venerer",
-  ];
+interface RegisterArtifactFromProps {
+  artifactSets: artifactSet[];
+}
+
+const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
+  artifactSets,
+}) => {
+  console.log(artifactSets);
+
   const equippedParts = ["Flower", "Plume", "Sands", "Goblet", "Circlet"];
   const attributes = [
     "HP",
@@ -50,19 +69,7 @@ const RegisterArtifactFrom = () => {
     <FormWrapper formTitle="聖遺物の登録">
       <form className="space-y-4">
         <div>
-          <FormLabel htmlFor="setEffect" labelName="セット効果" />
-          <Select>
-            <SelectTrigger id="setEffect">
-              <SelectValue placeholder="Select set effect" />
-            </SelectTrigger>
-            <SelectContent>
-              {setEffects.map((effect) => (
-                <SelectItem key={effect} value={effect}>
-                  {effect}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ArtifactSetSelector artifactSets={artifactSets} />
         </div>
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
