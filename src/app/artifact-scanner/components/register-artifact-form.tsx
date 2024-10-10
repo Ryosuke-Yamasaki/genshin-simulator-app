@@ -61,7 +61,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
           <Select>
             <SelectTrigger id="equippedPart">
-              <SelectValue placeholder="Select equipped part" />
+              <SelectValue placeholder="装備部位の選択" />
             </SelectTrigger>
             <SelectContent>
               {artifactTypes.map((type) => (
@@ -76,7 +76,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
           <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
           <Select>
             <SelectTrigger id="mainAttribute">
-              <SelectValue placeholder="Select main attribute" />
+              <SelectValue placeholder="メインオプションの選択" />
             </SelectTrigger>
             <SelectContent>
               {attributes.map((attr) => (
@@ -97,7 +97,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={`Sub Attribute ${index + 1}`} />
+                  <SelectValue placeholder="サブオプションの選択" />
                 </SelectTrigger>
                 <SelectContent>
                   {attributes.map((attr) => (
@@ -109,7 +109,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
               </Select>
               <Input
                 type="text"
-                placeholder="Value"
+                placeholder="0"
                 value={subStat.value}
                 onChange={(e) =>
                   handleSubStatChange(index, "value", e.target.value)
