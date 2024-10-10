@@ -7,7 +7,8 @@ export const fetchArtifacts = async () => {
       id: true,
       nameJp: true,
       nameEn: true,
-      set: { select: { id: true, nameJp: true, nameEn: true } },
+      set: true,
+      type: true,
     },
   });
 
