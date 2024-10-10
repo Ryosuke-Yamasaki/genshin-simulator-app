@@ -114,8 +114,9 @@ model ArtifactType {
 
 model MainOption {
   id          String       @id
+  nameJp      String       @map("name_jp")
+  nameEn      String       @map("name_en")
   quality     Int
-  attribute   String
   value       String
   artifacters Artifacter[]
 
