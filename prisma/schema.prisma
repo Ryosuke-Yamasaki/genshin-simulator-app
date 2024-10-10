@@ -97,6 +97,7 @@ model ArtifactSet {
   id        String     @id
   nameJp    String     @map("name_jp")
   nameEn    String     @map("name_en")
+  quality   Int
   artifacts Artifact[]
 
   @@map("artifact_sets")
