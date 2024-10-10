@@ -14,3 +14,11 @@ export const fetchArtifacts = async () => {
 
   return artifacts;
 };
+
+export const fetchArtifactSets = async () => {
+  const artifactSets = await prisma.artifactSet.findMany({
+    orderBy: [{ quality: "asc" }, { id: "asc" }],
+  });
+
+  return artifactSets;
+};
