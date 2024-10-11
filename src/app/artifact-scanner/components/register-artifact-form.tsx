@@ -35,7 +35,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
 
   console.log(regiterArtifactData);
 
-  const handleSubStatChange = (
+  const handleSubOptionChange = (
     index: number,
     field: "attribute" | "value",
     value: string
@@ -104,7 +104,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
             <div key={index} className="flex space-x-2">
               <Select
                 onValueChange={(value) =>
-                  handleSubStatChange(index, "attribute", value)
+                  handleSubOptionChange(index, "attribute", value)
                 }
               >
                 <SelectTrigger>
@@ -123,7 +123,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
                 placeholder="0"
                 value={subOption.value}
                 onChange={(e) =>
-                  handleSubStatChange(index, "value", e.target.value)
+                  handleSubOptionChange(index, "value", e.target.value)
                 }
                 className="w-24"
               />
