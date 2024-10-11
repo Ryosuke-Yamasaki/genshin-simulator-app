@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { FC, useState } from "react";
 import FormLabel from "./form-label";
+import { useRecoilState } from "recoil";
+import { registerArtifactDataState } from "../../state";
 
 interface ArtifactSetSelectorProps {
   artifactSets: artifactSet[];
@@ -26,8 +28,11 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
   artifactSets,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const [qualityFilter, setQualityFilter] = useState<string[]>(["5"]);
+
+  const [regiterArtifactData, setRegisterArtifactData] = useRecoilState(
+    registerArtifactDataState
+  );
 
   return (
     <div>
@@ -40,8 +45,9 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
             aria-expanded={open}
             className="w-full mt-1 justify-between"
           >
-            {value
-              ? artifactSets.find((set) => set.id === value)?.nameJp
+            {regiterArtifactData.set
+              ? artifactSets.find((set) => set.id === regiterArtifactData.set)
+                  ?.nameJp
               : "セット効果の選択"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -77,7 +83,10 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                         key={set.id}
                         value={set.id}
                         onSelect={(currentValue) => {
-                          setValue(currentValue === value ? "" : currentValue);
+                          setRegisterArtifactData((prev) => ({
+                            ...prev,
+                            ["set"]: currentValue,
+                          }));
                           setOpen(false);
                         }}
                       >
@@ -85,7 +94,9 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                         <CheckIcon
                           className={cn(
                             "ml-auto h-4 w-4",
-                            value === set.id ? "opacity-100" : "opacity-0"
+                            regiterArtifactData.set === set.id
+                              ? "opacity-100"
+                              : "opacity-0"
                           )}
                         />
                       </CommandItem>
@@ -102,7 +113,10 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                         key={set.id}
                         value={set.id}
                         onSelect={(currentValue) => {
-                          setValue(currentValue === value ? "" : currentValue);
+                          setRegisterArtifactData((prev) => ({
+                            ...prev,
+                            ["set"]: currentValue,
+                          }));
                           setOpen(false);
                         }}
                       >
@@ -110,7 +124,9 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                         <CheckIcon
                           className={cn(
                             "ml-auto h-4 w-4",
-                            value === set.id ? "opacity-100" : "opacity-0"
+                            regiterArtifactData.set === set.id
+                              ? "opacity-100"
+                              : "opacity-0"
                           )}
                         />
                       </CommandItem>

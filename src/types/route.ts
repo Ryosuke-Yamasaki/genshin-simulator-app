@@ -17,8 +17,5 @@ type RegisterArtifactData = {
   set: string;
   type: string;
   mainOption: string;
-  subOption1: string;
-  subOption2: string;
-  subOption3: string;
-  subOption4: string;
+  subOptions: Status[];
 };

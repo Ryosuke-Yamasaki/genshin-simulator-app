@@ -21,9 +21,6 @@ export const registerArtifactDataState = atom<RegisterArtifactData>({
     set: "",
     type: "",
     mainOption: "",
-    subOption1: "",
-    subOption2: "",
-    subOption3: "",
-    subOption4: "",
+    subOptions: Array(4).fill({ attribute: "", value: "" }),
   },
 });

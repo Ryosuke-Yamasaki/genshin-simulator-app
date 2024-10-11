@@ -19,6 +19,8 @@ import {
   mainStatuses,
   subStatuses,
 } from "../data/artifact-data";
+import { useRecoilState } from "recoil";
+import { registerArtifactDataState } from "../state";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
@@ -27,20 +29,23 @@ interface RegisterArtifactFromProps {
 const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   artifactSets,
 }) => {
-  console.log(artifactSets);
-
-  const [subStats, setSubStats] = useState(
-    Array(4).fill({ attribute: "", value: "" })
+  const [regiterArtifactData, setRegisterArtifactData] = useRecoilState(
+    registerArtifactDataState
   );
+
+  console.log(regiterArtifactData);
 
   const handleSubStatChange = (
     index: number,
     field: "attribute" | "value",
-    value: string | number
+    value: string
   ) => {
-    const newSubStats = [...subStats];
-    newSubStats[index] = { ...newSubStats[index], [field]: value };
-    setSubStats(newSubStats);
+    const newSubOptions = [...regiterArtifactData.subOptions];
+    newSubOptions[index] = { ...newSubOptions[index], [field]: value };
+    setRegisterArtifactData({
+      ...regiterArtifactData,
+      subOptions: newSubOptions,
+    });
   };
 
   return (
@@ -51,7 +56,14 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
         </div>
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setRegisterArtifactData((prev) => ({
+                ...prev,
+                ["type"]: value,
+              }))
+            }
+          >
             <SelectTrigger id="equippedPart">
               <SelectValue placeholder="装備部位の選択" />
             </SelectTrigger>
@@ -66,7 +78,14 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
         </div>
         <div>
           <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setRegisterArtifactData((prev) => ({
+                ...prev,
+                ["mainOption"]: value,
+              }))
+            }
+          >
             <SelectTrigger id="mainAttribute">
               <SelectValue placeholder="メインオプションの選択" />
             </SelectTrigger>
@@ -81,7 +100,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
         </div>
         <div>
           <FormLabel labelName="サブオプション" />
-          {subStats.map((subStat, index) => (
+          {regiterArtifactData.subOptions.map((subOption, index) => (
             <div key={index} className="flex space-x-2">
               <Select
                 onValueChange={(value) =>
@@ -102,7 +121,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
               <Input
                 type="text"
                 placeholder="0"
-                value={subStat.value}
+                value={subOption.value}
                 onChange={(e) =>
                   handleSubStatChange(index, "value", e.target.value)
                 }
