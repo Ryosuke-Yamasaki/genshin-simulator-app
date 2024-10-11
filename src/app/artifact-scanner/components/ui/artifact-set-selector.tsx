@@ -19,6 +19,7 @@ import { useState } from "react";
 import FormLabel from "./form-label";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
+  artifactSetDataState,
   filteredArtifactSetsState,
   qualityFilterState,
   registerArtifactDataState,
@@ -30,6 +31,7 @@ const ArtifactSetSelector = () => {
   const [retisterArtifactData, setRegisterArtifactData] = useRecoilState(
     registerArtifactDataState
   );
+  const artifactSets = useRecoilValue(artifactSetDataState);
   const filteredArtifactSets = useRecoilValue(filteredArtifactSetsState);
 
   return (
@@ -44,9 +46,8 @@ const ArtifactSetSelector = () => {
             className="w-full mt-1 justify-between"
           >
             {retisterArtifactData.set
-              ? filteredArtifactSets.find(
-                  (set) => set.id === retisterArtifactData.set
-                )?.nameJp
+              ? artifactSets.find((set) => set.id === retisterArtifactData.set)
+                  ?.nameJp
               : "セット効果の選択"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
