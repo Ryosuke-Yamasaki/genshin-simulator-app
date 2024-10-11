@@ -1,3 +1,8 @@
+type Status = {
+  attribute: string;
+  value: string;
+};
+
 type ImportArtifactData = {
   name: string;
   mainOption: Status;
@@ -8,7 +13,12 @@ type ImportArtifactData = {
   [key: string]: string | Status;
 };
 
-type Status = {
-  attribute: string;
-  value: string;
+type RegisterArtifactData = {
+  set: string;
+  type: string;
+  mainOption: string;
+  subOption1: string;
+  subOption2: string;
+  subOption3: string;
+  subOption4: string;
 };

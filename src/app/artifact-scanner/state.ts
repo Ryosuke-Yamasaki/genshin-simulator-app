@@ -14,3 +14,16 @@ export const imageState = atom<File | null>({
   key: "imageState",
   default: null,
 });
+
+export const registerArtifactDataState = atom<RegisterArtifactData>({
+  key: "registerArtifactDataState",
+  default: {
+    set: "",
+    type: "",
+    mainOption: "",
+    subOption1: "",
+    subOption2: "",
+    subOption3: "",
+    subOption4: "",
+  },
+});
