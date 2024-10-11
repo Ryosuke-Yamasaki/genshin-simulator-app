@@ -45,6 +45,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
               setRegisterArtifactData({
                 ...registerArtifactData,
                 type: value,
+                mainOption: "",
               })
             }
           >
@@ -80,7 +81,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
                     stat.type.includes(registerArtifactData.type)
                   )
                   .map((stat) => (
-                    <SelectItem key={stat.id} value={stat.id}>
+                    <SelectItem key={stat.id} value={stat.nameJp}>
                       {stat.nameJp}
                     </SelectItem>
                   ))
