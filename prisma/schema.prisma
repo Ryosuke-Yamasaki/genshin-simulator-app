@@ -117,17 +117,17 @@ model MainOption {
   nameJp      String       @map("name_jp")
   nameEn      String       @map("name_en")
   quality     Int
-  value       String
+  value       Decimal      @db.Decimal(10, 5)
   artifacters Artifacter[]
 
   @@map("main_options")
 }
 
 model SubOption {
-  id           String @id @default(cuid())
-  artifacterId String @map("artifacter_id")
-  subStatusId  String @map("sub_status_id")
-  value        String
+  id           String  @id @default(cuid())
+  artifacterId String  @map("artifacter_id")
+  subStatusId  String  @map("sub_status_id")
+  value        Decimal @db.Decimal(10, 5)
 
   artifacter Artifacter @relation(fields: [artifacterId], references: [id])
   subStatus  SubStatus  @relation(fields: [subStatusId], references: [id])
