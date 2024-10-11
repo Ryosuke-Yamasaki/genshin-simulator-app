@@ -10,7 +10,7 @@ type artifactSet = {
   id: string;
   nameJp: string;
   nameEn: string;
-  quality: number;
+  quality: string;
 };
 
 type artifactType = {

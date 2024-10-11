@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,8 +19,8 @@ import {
   mainStatuses,
   subStatuses,
 } from "../data/artifact-data";
-import { useRecoilState } from "recoil";
-import { registerArtifactDataState } from "../state";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { artifactSetDataState, registerArtifactDataState } from "../state";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
@@ -29,21 +29,26 @@ interface RegisterArtifactFromProps {
 const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   artifactSets,
 }) => {
-  const [regiterArtifactData, setRegisterArtifactData] = useRecoilState(
+  const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
     registerArtifactDataState
   );
+  const setArtifactSetData = useSetRecoilState(artifactSetDataState);
 
-  console.log(regiterArtifactData);
+  useEffect(() => {
+    setArtifactSetData(artifactSets);
+  }, [artifactSets]);
+
+  console.log(registerArtifactData);
 
   const handleSubOptionChange = (
     index: number,
     field: "attribute" | "value",
     value: string
   ) => {
-    const newSubOptions = [...regiterArtifactData.subOptions];
+    const newSubOptions = [...registerArtifactData.subOptions];
     newSubOptions[index] = { ...newSubOptions[index], [field]: value };
     setRegisterArtifactData({
-      ...regiterArtifactData,
+      ...registerArtifactData,
       subOptions: newSubOptions,
     });
   };
@@ -52,7 +57,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
     <FormWrapper formTitle="聖遺物の登録">
       <form className="space-y-4">
         <div>
-          <ArtifactSetSelector artifactSets={artifactSets} />
+          <ArtifactSetSelector />
         </div>
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
@@ -100,7 +105,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
         </div>
         <div>
           <FormLabel labelName="サブオプション" />
-          {regiterArtifactData.subOptions.map((subOption, index) => (
+          {registerArtifactData.subOptions.map((subOption, index) => (
             <div key={index} className="flex space-x-2">
               <Select
                 onValueChange={(value) =>

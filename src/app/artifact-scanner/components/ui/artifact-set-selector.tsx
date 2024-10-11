@@ -15,24 +15,22 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { FC, useState } from "react";
+import { useState } from "react";
 import FormLabel from "./form-label";
-import { useRecoilState } from "recoil";
-import { registerArtifactDataState } from "../../state";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  filteredArtifactSetsState,
+  qualityFilterState,
+  registerArtifactDataState,
+} from "../../state";
 
-interface ArtifactSetSelectorProps {
-  artifactSets: artifactSet[];
-}
-
-const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
-  artifactSets,
-}) => {
+const ArtifactSetSelector = () => {
   const [open, setOpen] = useState(false);
-  const [qualityFilter, setQualityFilter] = useState<string[]>(["5"]);
-
-  const [regiterArtifactData, setRegisterArtifactData] = useRecoilState(
+  const [qualityFilter, setQualityFilter] = useRecoilState(qualityFilterState);
+  const [retisterArtifactData, setRegisterArtifactData] = useRecoilState(
     registerArtifactDataState
   );
+  const filteredArtifactSets = useRecoilValue(filteredArtifactSetsState);
 
   return (
     <div>
@@ -45,9 +43,10 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
             aria-expanded={open}
             className="w-full mt-1 justify-between"
           >
-            {regiterArtifactData.set
-              ? artifactSets.find((set) => set.id === regiterArtifactData.set)
-                  ?.nameJp
+            {retisterArtifactData.set
+              ? filteredArtifactSets.find(
+                  (set) => set.id === retisterArtifactData.set
+                )?.nameJp
               : "セット効果の選択"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -60,8 +59,8 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                   type="multiple"
                   variant="outline"
                   size="sm"
-                  defaultValue={["5"]}
-                  onValueChange={(value) => setQualityFilter(value)}
+                  value={qualityFilter}
+                  onValueChange={setQualityFilter}
                 >
                   <ToggleGroupItem value="4" aria-label="Toggle 4">
                     星4
@@ -71,67 +70,41 @@ const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
-              {qualityFilter.length === 0 && (
+              <CommandSeparator />
+              {filteredArtifactSets.length === 0 && (
                 <CommandEmpty>セット効果がありません</CommandEmpty>
               )}
-              {qualityFilter.includes("4") && (
-                <CommandGroup heading="星4">
-                  {artifactSets
-                    .filter((set) => set.quality === 4)
-                    .map((set) => (
-                      <CommandItem
-                        key={set.id}
-                        value={set.id}
-                        onSelect={(currentValue) => {
-                          setRegisterArtifactData((prev) => ({
-                            ...prev,
-                            ["set"]: currentValue,
-                          }));
-                          setOpen(false);
-                        }}
-                      >
-                        {set.nameJp}
-                        <CheckIcon
-                          className={cn(
-                            "ml-auto h-4 w-4",
-                            regiterArtifactData.set === set.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                </CommandGroup>
-              )}
-              <CommandSeparator />
-              {qualityFilter.includes("5") && (
-                <CommandGroup heading="星5">
-                  {artifactSets
-                    .filter((set) => set.quality === 5)
-                    .map((set) => (
-                      <CommandItem
-                        key={set.id}
-                        value={set.id}
-                        onSelect={(currentValue) => {
-                          setRegisterArtifactData((prev) => ({
-                            ...prev,
-                            ["set"]: currentValue,
-                          }));
-                          setOpen(false);
-                        }}
-                      >
-                        {set.nameJp}
-                        <CheckIcon
-                          className={cn(
-                            "ml-auto h-4 w-4",
-                            regiterArtifactData.set === set.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                </CommandGroup>
+              {["4", "5"].map(
+                (quality) =>
+                  qualityFilter.includes(quality) && (
+                    <CommandGroup key={quality} heading={`星${quality}`}>
+                      {filteredArtifactSets
+                        .filter((set) => set.quality === quality)
+                        .map((set) => (
+                          <CommandItem
+                            key={set.id}
+                            value={set.id}
+                            onSelect={(currentValue) => {
+                              setRegisterArtifactData((prev) => ({
+                                ...prev,
+                                set: currentValue,
+                              }));
+                              setOpen(false);
+                            }}
+                          >
+                            {set.nameJp}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                retisterArtifactData.set === set.id
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                    </CommandGroup>
+                  )
               )}
             </CommandList>
           </Command>
