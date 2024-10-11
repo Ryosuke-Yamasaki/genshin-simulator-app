@@ -5,8 +5,8 @@ export const previewState = atom<string | null>({
   default: null,
 });
 
-export const artifactDataState = atom<ImportArtifactData | null>({
-  key: "artifactDataState",
+export const importArtifactDataState = atom<ImportArtifactData | null>({
+  key: "importArtifactDataState",
   default: null,
 });
 

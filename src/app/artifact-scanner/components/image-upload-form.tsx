@@ -4,7 +4,7 @@ import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import SubmitButton from "./submit-button";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { imageState, previewState } from "@/atoms/ocr";
+import { imageState, previewState } from "@/app/artifact-scanner/state";
 import Image from "next/image";
 import FormWrapper from "./form-wrapper";
 import FormLabel from "./ui/form-label";
