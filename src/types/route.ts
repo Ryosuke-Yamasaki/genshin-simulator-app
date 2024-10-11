@@ -15,6 +15,7 @@ type ImportArtifactData = {
 
 type RegisterArtifactData = {
   set: string;
+  quality: string;
   type: string;
   mainOption: string;
   subOptions: Status[];

@@ -89,6 +89,7 @@ const ArtifactSetSelector = () => {
                               setRegisterArtifactData({
                                 ...registerArtifactData,
                                 set: value,
+                                quality: set.quality,
                               });
                               setOpen(false);
                             }}
