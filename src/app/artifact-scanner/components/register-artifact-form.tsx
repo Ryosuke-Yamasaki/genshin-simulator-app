@@ -38,8 +38,6 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
     setArtifactSetData(artifactSets);
   }, [artifactSets]);
 
-  console.log(registerArtifactData);
-
   const handleSubOptionChange = (
     index: number,
     field: "attribute" | "value",
@@ -95,11 +93,21 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
               <SelectValue placeholder="メインオプションの選択" />
             </SelectTrigger>
             <SelectContent>
-              {mainStatuses.map((stat) => (
-                <SelectItem key={stat.id} value={stat.id}>
-                  {stat.nameJp}
-                </SelectItem>
-              ))}
+              {registerArtifactData.type ? (
+                mainStatuses
+                  .filter((stat) =>
+                    stat.type.includes(registerArtifactData.type)
+                  )
+                  .map((stat) => (
+                    <SelectItem key={stat.id} value={stat.id}>
+                      {stat.nameJp}
+                    </SelectItem>
+                  ))
+              ) : (
+                <div className="py-6 text-center text-sm">
+                  装備部位を選択してください
+                </div>
+              )}
             </SelectContent>
           </Select>
         </div>

@@ -19,10 +19,10 @@ export const subStatuses = [
   { id: "10", nameJp: "会心ダメージ", nameEn: "CRIT DMG" },
 ];
 
-export const mainStatuses = [
+export const mainOptions = [
   { id: "1", quality: 5, nameJp: "HP実数", nameEn: "HP", value: 4780 },
-  { id: "2", quality: 5, nameJp: "攻撃力実数", nameEn: "ATK", value: 311 },
-  { id: "3", quality: 5, nameJp: "HP%", nameEn: "HP", value: 0.466 },
+  { id: "2", quality: 5, nameJp: "HP%", nameEn: "HP", value: 0.466 },
+  { id: "3", quality: 5, nameJp: "攻撃力実数", nameEn: "ATK", value: 311 },
   { id: "4", quality: 5, nameJp: "攻撃力%", nameEn: "ATK", value: 0.466 },
   { id: "5", quality: 5, nameJp: "防御力%", nameEn: "DEF", value: 0.583 },
   {
@@ -111,8 +111,8 @@ export const mainStatuses = [
     value: 359,
   },
   { id: "19", quality: 4, nameJp: "HP実数", nameEn: "HP", value: 3571 },
-  { id: "20", quality: 4, nameJp: "攻撃力実数", nameEn: "ATK", value: 232 },
-  { id: "21", quality: 4, nameJp: "HP%", nameEn: "HP", value: 0.348 },
+  { id: "20", quality: 4, nameJp: "HP%", nameEn: "HP", value: 0.348 },
+  { id: "21", quality: 4, nameJp: "攻撃力実数", nameEn: "ATK", value: 232 },
   { id: "22", quality: 4, nameJp: "攻撃力%", nameEn: "ATK", value: 0.348 },
   { id: "23", quality: 4, nameJp: "防御力%", nameEn: "DEF", value: 0.435 },
   {
@@ -200,4 +200,55 @@ export const mainStatuses = [
     nameEn: "Healing Bonus",
     value: 0.268,
   },
+];
+
+export const mainStatuses = [
+  { id: "1", nameJp: "HP実数", nameEn: "HP", type: ["1"] },
+  { id: "2", nameJp: "HP%", nameEn: "HP", type: ["3", "4", "5"] },
+  { id: "3", nameJp: "攻撃力実数", nameEn: "ATK", type: ["2"] },
+  { id: "4", nameJp: "攻撃力%", nameEn: "ATK", type: ["3", "4", "5"] },
+  { id: "5", nameJp: "防御力%", nameEn: "DEF", type: ["3", "4", "5"] },
+  {
+    id: "6",
+    nameJp: "元素熟知",
+    nameEn: "Elemental Mastery",
+    type: ["3", "4", "5"],
+  },
+  {
+    id: "7",
+    nameJp: "元素チャージ効率",
+    nameEn: "Energy Recharge",
+    type: ["3"],
+  },
+  { id: "8", nameJp: "炎元素ダメージ", nameEn: "Pyro DMG Bonus", type: ["4"] },
+  { id: "9", nameJp: "水元素ダメージ", nameEn: "Hydro DMG Bonus", type: ["4"] },
+  { id: "10", nameJp: "氷元素ダメージ", nameEn: "Cryo DMG Bonus", type: ["4"] },
+  {
+    id: "11",
+    nameJp: "雷元素ダメージ",
+    nameEn: "Electro DMG Bonus",
+    type: ["4"],
+  },
+  {
+    id: "12",
+    nameJp: "風元素ダメージ",
+    nameEn: "Anemo DMG Bonus",
+    type: ["4"],
+  },
+  { id: "13", nameJp: "岩元素ダメージ", nameEn: "Geo DMG Bonus", type: ["4"] },
+  {
+    id: "14",
+    nameJp: "草元素ダメージ",
+    nameEn: "Dendro DMG Bonus",
+    type: ["4"],
+  },
+  {
+    id: "15",
+    nameJp: "物理ダメージ",
+    nameEn: "Physical DMG Bonus",
+    type: ["4"],
+  },
+  { id: "16", nameJp: "会心率", nameEn: "CRIT Rate", type: ["5"] },
+  { id: "17", nameJp: "会心ダメージ", nameEn: "CRIT DMG", type: ["5"] },
+  { id: "18", nameJp: "与える治療効果", nameEn: "Healing Bonus", type: ["5"] },
 ];
