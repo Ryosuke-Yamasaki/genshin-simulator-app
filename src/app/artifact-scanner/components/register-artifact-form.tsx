@@ -14,7 +14,11 @@ import {
 import FormWrapper from "./form-wrapper";
 import FormLabel from "./ui/form-label";
 import ArtifactSetSelector from "./ui/artifact-set-selector";
-import { artifactTypes } from "../data/artifact-data";
+import {
+  artifactTypes,
+  mainStatuses,
+  subStatuses,
+} from "../data/artifact-data";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
@@ -24,16 +28,6 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   artifactSets,
 }) => {
   console.log(artifactSets);
-
-  const attributes = [
-    "HP",
-    "ATK",
-    "DEF",
-    "Elemental Mastery",
-    "Energy Recharge",
-    "CRIT Rate",
-    "CRIT DMG",
-  ];
 
   const [subStats, setSubStats] = useState(
     Array(4).fill({ attribute: "", value: "" })
@@ -77,9 +71,9 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
               <SelectValue placeholder="メインオプションの選択" />
             </SelectTrigger>
             <SelectContent>
-              {attributes.map((attr) => (
-                <SelectItem key={attr} value={attr}>
-                  {attr}
+              {mainStatuses.map((stat) => (
+                <SelectItem key={stat.id} value={stat.id}>
+                  {stat.nameJp}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -98,9 +92,9 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
                   <SelectValue placeholder="サブオプションの選択" />
                 </SelectTrigger>
                 <SelectContent>
-                  {attributes.map((attr) => (
-                    <SelectItem key={attr} value={attr}>
-                      {attr}
+                  {subStatuses.map((stat) => (
+                    <SelectItem key={stat.id} value={stat.id}>
+                      {stat.nameJp}
                     </SelectItem>
                   ))}
                 </SelectContent>
