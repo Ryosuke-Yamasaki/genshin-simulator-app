@@ -3,7 +3,6 @@
 import { FC, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -14,13 +13,10 @@ import {
 import FormWrapper from "./form-wrapper";
 import FormLabel from "./ui/form-label";
 import ArtifactSetSelector from "./ui/artifact-set-selector";
-import {
-  artifactTypes,
-  mainStatuses,
-  subStatuses,
-} from "../data/artifact-data";
+import { artifactTypes, mainStatuses } from "../data/artifact-data";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { artifactSetDataState, registerArtifactDataState } from "../state";
+import SubOptionSelector from "./ui/sub-option-selector";
 
 interface RegisterArtifactFromProps {
   artifactSets: artifactSet[];
@@ -38,27 +34,10 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
     setArtifactSetData(artifactSets);
   }, [artifactSets]);
 
-  const handleSubOptionChange = (
-    index: number,
-    field: "attribute" | "value",
-    value: string
-  ) => {
-    const newSubOptions = [...registerArtifactData.subOptions];
-    newSubOptions[index] = { ...newSubOptions[index], [field]: value };
-    setRegisterArtifactData({
-      ...registerArtifactData,
-      subOptions: newSubOptions,
-    });
-  };
-
-  console.log(registerArtifactData);
-
   return (
     <FormWrapper formTitle="聖遺物の登録">
       <form className="space-y-4">
-        <div>
-          <ArtifactSetSelector />
-        </div>
+        <ArtifactSetSelector />
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
           <Select
@@ -113,38 +92,7 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <FormLabel labelName="サブオプション" />
-          {registerArtifactData.subOptions.map((subOption, index) => (
-            <div key={index} className="flex space-x-2">
-              <Select
-                onValueChange={(value) =>
-                  handleSubOptionChange(index, "attribute", value)
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="サブオプションの選択" />
-                </SelectTrigger>
-                <SelectContent>
-                  {subStatuses.map((stat) => (
-                    <SelectItem key={stat.id} value={stat.id}>
-                      {stat.nameJp}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Input
-                type="text"
-                placeholder="0"
-                value={subOption.value}
-                onChange={(e) =>
-                  handleSubOptionChange(index, "value", e.target.value)
-                }
-                className="w-24"
-              />
-            </div>
-          ))}
-        </div>
+        <SubOptionSelector />
         <CardFooter className="px-0 pt-6">
           <Button type="submit" className="w-full">
             Register Artifact
