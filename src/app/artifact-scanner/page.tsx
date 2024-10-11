@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import ImageUploadForm from "./components/image-upload-form";
 import PreviewArtifact from "./components/preview-artifact";
 import { fetchArtifactSets } from "./fetcher";
-import RegisterArtifactFrom from "./components/register-artifact-form";
+import RegisterArtifactForm from "./components/register-artifact-form";
 
 const ArtifactScannerPage = async () => {
   const session = await auth();
@@ -13,7 +13,7 @@ const ArtifactScannerPage = async () => {
 
   return (
     <div className="flex">
-      <RegisterArtifactFrom artifactSets={artifactSets} />
+      <RegisterArtifactForm artifactSets={artifactSets} />
       <ImageUploadForm />
       <PreviewArtifact />
     </div>

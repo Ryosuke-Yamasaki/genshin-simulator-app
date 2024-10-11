@@ -18,11 +18,11 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { artifactSetDataState, registerArtifactDataState } from "../state";
 import SubOptionSelector from "./ui/sub-option-selector";
 
-interface RegisterArtifactFromProps {
+interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
 }
 
-const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
+const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
   artifactSets,
 }) => {
   const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
@@ -103,4 +103,4 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
   );
 };
 
-export default RegisterArtifactFrom;
+export default RegisterArtifactForm;
