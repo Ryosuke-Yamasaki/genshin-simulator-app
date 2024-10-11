@@ -97,7 +97,7 @@ model ArtifactSet {
   id        String     @id
   nameJp    String     @map("name_jp")
   nameEn    String     @map("name_en")
-  quality   Int
+  quality   String
   artifacts Artifact[]
 
   @@map("artifact_sets")
@@ -116,7 +116,7 @@ model MainOption {
   id          String       @id
   nameJp      String       @map("name_jp")
   nameEn      String       @map("name_en")
-  quality     Int
+  quality     String
   value       Decimal      @db.Decimal(10, 5)
   artifacters Artifacter[]
 
