@@ -28,7 +28,7 @@ import {
 const ArtifactSetSelector = () => {
   const [open, setOpen] = useState(false);
   const [qualityFilter, setQualityFilter] = useRecoilState(qualityFilterState);
-  const [retisterArtifactData, setRegisterArtifactData] = useRecoilState(
+  const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
     registerArtifactDataState
   );
   const artifactSets = useRecoilValue(artifactSetDataState);
@@ -45,8 +45,8 @@ const ArtifactSetSelector = () => {
             aria-expanded={open}
             className="w-full mt-1 justify-between"
           >
-            {retisterArtifactData.set
-              ? artifactSets.find((set) => set.id === retisterArtifactData.set)
+            {registerArtifactData.set
+              ? artifactSets.find((set) => set.id === registerArtifactData.set)
                   ?.nameJp
               : "セット効果の選択"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -85,11 +85,11 @@ const ArtifactSetSelector = () => {
                           <CommandItem
                             key={set.id}
                             value={set.id}
-                            onSelect={(currentValue) => {
-                              setRegisterArtifactData((prev) => ({
-                                ...prev,
-                                set: currentValue,
-                              }));
+                            onSelect={(value) => {
+                              setRegisterArtifactData({
+                                ...registerArtifactData,
+                                set: value,
+                              });
                               setOpen(false);
                             }}
                           >
@@ -97,7 +97,7 @@ const ArtifactSetSelector = () => {
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                retisterArtifactData.set === set.id
+                                registerArtifactData.set === set.id
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}

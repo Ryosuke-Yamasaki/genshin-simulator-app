@@ -51,6 +51,8 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
     });
   };
 
+  console.log(registerArtifactData);
+
   return (
     <FormWrapper formTitle="聖遺物の登録">
       <form className="space-y-4">
@@ -61,10 +63,10 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
           <Select
             onValueChange={(value) =>
-              setRegisterArtifactData((prev) => ({
-                ...prev,
-                ["type"]: value,
-              }))
+              setRegisterArtifactData({
+                ...registerArtifactData,
+                type: value,
+              })
             }
           >
             <SelectTrigger id="equippedPart">
@@ -83,10 +85,10 @@ const RegisterArtifactFrom: FC<RegisterArtifactFromProps> = ({
           <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
           <Select
             onValueChange={(value) =>
-              setRegisterArtifactData((prev) => ({
-                ...prev,
-                ["mainOption"]: value,
-              }))
+              setRegisterArtifactData({
+                ...registerArtifactData,
+                mainOption: value,
+              })
             }
           >
             <SelectTrigger id="mainAttribute">
