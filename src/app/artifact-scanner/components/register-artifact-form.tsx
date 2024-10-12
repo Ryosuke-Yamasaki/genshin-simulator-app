@@ -23,6 +23,7 @@ import { useFormState } from "react-dom";
 import { registerArtifact } from "../actions";
 import { postArtifacterSchema } from "../schema";
 import ArtifactTypeSelector from "./ui/artifact-type-selector";
+import ArtifactMainOptionSelector from "./ui/artifact-main-option-selector";
 
 interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
@@ -64,39 +65,10 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
           metaQuality={field.quality}
         />
         <ArtifactTypeSelector meta={field.typeId} />
-        <div>
-          <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
-          <Select
-            name="mainAttribute"
-            onValueChange={(value) =>
-              setRegisterArtifactData({
-                ...registerArtifactData,
-                mainOption: value,
-              })
-            }
-          >
-            <SelectTrigger id="mainAttribute">
-              <SelectValue placeholder="メインオプションの選択" />
-            </SelectTrigger>
-            <SelectContent>
-              {registerArtifactData.type ? (
-                mainStatuses
-                  .filter((stat) =>
-                    stat.type.includes(registerArtifactData.type)
-                  )
-                  .map((stat) => (
-                    <SelectItem key={stat.id} value={stat.nameJp}>
-                      {stat.nameJp}
-                    </SelectItem>
-                  ))
-              ) : (
-                <div className="py-6 text-center text-sm">
-                  装備部位を選択してください
-                </div>
-              )}
-            </SelectContent>
-          </Select>
-        </div>
+        <ArtifactMainOptionSelector
+          meta={field.mainOption}
+          typeId={field.typeId.value}
+        />
         <SubOptionSelector />
         <CardFooter className="px-0 pt-6">
           <Button type="submit" className="w-full">
