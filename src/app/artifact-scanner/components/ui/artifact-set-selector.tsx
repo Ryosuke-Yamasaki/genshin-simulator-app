@@ -37,11 +37,11 @@ const ArtifactSetSelector = () => {
 
   return (
     <div>
-      <FormLabel htmlFor="artifactSet" labelName="セット効果" />
+      <FormLabel htmlFor="setId" labelName="セット効果" />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            id="artifactSet"
+            id="setId"
             variant="outline"
             role="combobox"
             aria-expanded={open}
@@ -114,11 +114,7 @@ const ArtifactSetSelector = () => {
           </Command>
         </PopoverContent>
       </Popover>
-      <Input
-        type="hidden"
-        name="artifactSet"
-        value={registerArtifactData.set}
-      />
+      <Input type="hidden" name="setId" value={registerArtifactData.set} />
       <Input
         type="hidden"
         name="quality"

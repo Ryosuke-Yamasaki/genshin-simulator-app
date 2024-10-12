@@ -12,9 +12,9 @@ export const registerArtifact = async (
 
   if (!session?.user?.id) return "error";
 
-  const setId = formData.get("artifactSet") as string;
-  const typeId = formData.get("equippedPart") as string;
-  const mainOptionAttribute = formData.get("mainAttribute") as string;
+  const setId = formData.get("setId") as string;
+  const typeId = formData.get("typeId") as string;
+  const mainOptionAttribute = formData.get("mainOption") as string;
   const quality = formData.get("quality") as string;
 
   const artifacter: artifacter = {

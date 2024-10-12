@@ -43,9 +43,9 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
       <form className="space-y-4" action={formAction}>
         <ArtifactSetSelector />
         <div>
-          <FormLabel htmlFor="equippedPart" labelName="装備部位" />
+          <FormLabel htmlFor="typeId" labelName="装備部位" />
           <Select
-            name="equippedPart"
+            name="typeId"
             onValueChange={(value) =>
               setRegisterArtifactData({
                 ...registerArtifactData,
@@ -54,7 +54,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
               })
             }
           >
-            <SelectTrigger id="equippedPart">
+            <SelectTrigger id="typeId">
               <SelectValue placeholder="装備部位の選択" />
             </SelectTrigger>
             <SelectContent>
@@ -67,9 +67,9 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
           </Select>
         </div>
         <div>
-          <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
+          <FormLabel htmlFor="mainOption" labelName="メインオプション" />
           <Select
-            name="mainAttribute"
+            name="mainOption"
             onValueChange={(value) =>
               setRegisterArtifactData({
                 ...registerArtifactData,
@@ -77,7 +77,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
               })
             }
           >
-            <SelectTrigger id="mainAttribute">
+            <SelectTrigger id="mainOption">
               <SelectValue placeholder="メインオプションの選択" />
             </SelectTrigger>
             <SelectContent>
