@@ -1,4 +1,5 @@
 import Tesseract from "tesseract.js";
+import { mainOptions } from "../data/artifact-data";
 
 const cropImage = (
   image: HTMLImageElement,
@@ -81,4 +82,10 @@ export const importArtifactData = async (imagePath: string) => {
 
     image.onerror = (error) => reject(error);
   });
+};
+
+export const getMainOption = (quality: number, name: string) => {
+  return mainOptions.find(
+    (stat) => stat.quality === quality && stat.nameJp === name
+  );
 };
