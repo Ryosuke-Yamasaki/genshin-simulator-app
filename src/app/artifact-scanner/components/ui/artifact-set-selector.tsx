@@ -40,6 +40,7 @@ const ArtifactSetSelector = () => {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
+            id="artifactSet"
             variant="outline"
             role="combobox"
             aria-expanded={open}
