@@ -52,6 +52,7 @@ const SubOptionSelector = () => {
       {registerArtifactData.subOptions.map((subOption, index) => (
         <div key={index} className="flex space-x-2">
           <Select
+            name={`subAttribute${index}`}
             onValueChange={(value) => {
               handleSubOptionChange(index, "attribute", value);
             }}
@@ -69,6 +70,7 @@ const SubOptionSelector = () => {
           </Select>
           <Input
             type="text"
+            name={`subValue${index}`}
             value={subOption.value}
             onChange={(e) =>
               handleSubOptionChange(index, "value", e.target.value)

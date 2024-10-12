@@ -17,6 +17,8 @@ import { artifactTypes, mainStatuses } from "../data/artifact-data";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { artifactSetDataState, registerArtifactDataState } from "../state";
 import SubOptionSelector from "./ui/sub-option-selector";
+import { useFormState } from "react-dom";
+import { registerArtifact } from "../actions";
 
 interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
@@ -34,13 +36,16 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
     setArtifactSetData(artifactSets);
   }, [artifactSets]);
 
+  const [message, formAction, isPending] = useFormState(registerArtifact, null);
+
   return (
     <FormWrapper formTitle="聖遺物の登録">
-      <form className="space-y-4">
+      <form className="space-y-4" action={formAction}>
         <ArtifactSetSelector />
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
           <Select
+            name="equippedPart"
             onValueChange={(value) =>
               setRegisterArtifactData({
                 ...registerArtifactData,
@@ -64,6 +69,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
         <div>
           <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
           <Select
+            name="mainAttribute"
             onValueChange={(value) =>
               setRegisterArtifactData({
                 ...registerArtifactData,

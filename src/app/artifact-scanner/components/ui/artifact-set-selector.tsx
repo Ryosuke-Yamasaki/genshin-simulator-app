@@ -24,6 +24,7 @@ import {
   qualityFilterState,
   registerArtifactDataState,
 } from "../../state";
+import { Input } from "@/components/ui/input";
 
 const ArtifactSetSelector = () => {
   const [open, setOpen] = useState(false);
@@ -113,6 +114,16 @@ const ArtifactSetSelector = () => {
           </Command>
         </PopoverContent>
       </Popover>
+      <Input
+        type="hidden"
+        name="artifactSet"
+        value={registerArtifactData.set}
+      />
+      <Input
+        type="hidden"
+        name="quality"
+        value={registerArtifactData.quality}
+      />
     </div>
   );
 };
