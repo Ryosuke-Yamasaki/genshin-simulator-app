@@ -17,8 +17,11 @@ import { artifactTypes, mainStatuses } from "../data/artifact-data";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { artifactSetDataState, registerArtifactDataState } from "../state";
 import SubOptionSelector from "./ui/sub-option-selector";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
 import { registerArtifact } from "../actions";
+import { postArtifacterSchema } from "../schema";
 
 interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
@@ -36,12 +39,29 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
     setArtifactSetData(artifactSets);
   }, [artifactSets]);
 
-  const [message, formAction, isPending] = useFormState(registerArtifact, null);
+  const [lastResult, formAction] = useFormState(registerArtifact, null);
+  const [form, field] = useForm({
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: postArtifacterSchema });
+    },
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  });
 
   return (
     <FormWrapper formTitle="聖遺物の登録">
-      <form className="space-y-4" action={formAction}>
-        <ArtifactSetSelector />
+      <form
+        className="space-y-4"
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={formAction}
+        noValidate
+      >
+        <ArtifactSetSelector
+          metaSetId={field.setId}
+          metaQuality={field.quality}
+        />
         <div>
           <FormLabel htmlFor="equippedPart" labelName="装備部位" />
           <Select
