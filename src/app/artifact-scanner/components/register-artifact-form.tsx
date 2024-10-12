@@ -22,6 +22,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
 import { registerArtifact } from "../actions";
 import { postArtifacterSchema } from "../schema";
+import ArtifactTypeSelector from "./ui/artifact-type-selector";
 
 interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
@@ -62,30 +63,7 @@ const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
           metaSetId={field.setId}
           metaQuality={field.quality}
         />
-        <div>
-          <FormLabel htmlFor="equippedPart" labelName="装備部位" />
-          <Select
-            name="equippedPart"
-            onValueChange={(value) =>
-              setRegisterArtifactData({
-                ...registerArtifactData,
-                type: value,
-                mainOption: "",
-              })
-            }
-          >
-            <SelectTrigger id="equippedPart">
-              <SelectValue placeholder="装備部位の選択" />
-            </SelectTrigger>
-            <SelectContent>
-              {artifactTypes.map((type) => (
-                <SelectItem key={type.id} value={type.id}>
-                  {type.nameJp}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <ArtifactTypeSelector meta={field.typeId} />
         <div>
           <FormLabel htmlFor="mainAttribute" labelName="メインオプション" />
           <Select
