@@ -2,7 +2,7 @@ import {
   unstable_useControl as useControl,
   type FieldMetadata,
 } from "@conform-to/react";
-import { useRef, type ElementRef, ComponentProps, FC } from "react";
+import { useRef, type ElementRef, FC } from "react";
 import {
   SelectTrigger,
   Select,
@@ -40,7 +40,7 @@ const ArtifactMainOptionSelector: FC<ArtifactMainOptionSelectorProps> = ({
       >
         <option value="" />
         {mainStatuses.map((stat) => (
-          <option key={stat.id} value={stat.id} />
+          <option key={stat.id} value={stat.nameJp} />
         ))}
       </select>
       <FormLabel htmlFor={meta.id} labelName="メインオプション" />
