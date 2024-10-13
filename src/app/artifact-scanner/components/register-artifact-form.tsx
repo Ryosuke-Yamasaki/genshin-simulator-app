@@ -3,22 +3,19 @@
 import { FC, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import FormWrapper from "./form-wrapper";
-import FormLabel from "./ui/form-label";
 import ArtifactSetSelector from "./ui/artifact-set-selector";
-import { artifactTypes, mainStatuses } from "../data/artifact-data";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { artifactSetDataState, registerArtifactDataState } from "../state";
+import { useSetRecoilState } from "recoil";
+import { artifactSetDataState } from "../state";
 import SubOptionSelector from "./ui/sub-option-selector";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import { useFormState } from "react-dom";
 import { registerArtifact } from "../actions";
+import { postArtifacterSchema } from "../schema";
+import ArtifactTypeSelector from "./ui/artifact-type-selector";
+import ArtifactMainOptionSelector from "./ui/artifact-main-option-selector";
+import FormLabel from "./ui/form-label";
 
 interface RegisterArtifactFormProps {
   artifactSets: artifactSet[];
@@ -27,79 +24,55 @@ interface RegisterArtifactFormProps {
 const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
   artifactSets,
 }) => {
-  const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
-    registerArtifactDataState
-  );
   const setArtifactSetData = useSetRecoilState(artifactSetDataState);
 
   useEffect(() => {
     setArtifactSetData(artifactSets);
   }, [artifactSets]);
 
-  const [message, formAction, isPending] = useFormState(registerArtifact, null);
+  const [lastResult, formAction] = useFormState(registerArtifact, null);
+  const [form, fields] = useForm({
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: postArtifacterSchema });
+    },
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+    defaultValue: {
+      subOptions: [
+        { attribute: "", value: "" },
+        { attribute: "", value: "" },
+        { attribute: "", value: "" },
+        { attribute: "", value: "" },
+      ],
+    },
+  });
+  const subOptionFields = fields.subOptions.getFieldList();
 
   return (
     <FormWrapper formTitle="聖遺物の登録">
-      <form className="space-y-4" action={formAction}>
-        <ArtifactSetSelector />
+      <form
+        className="space-y-4"
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={formAction}
+        noValidate
+      >
+        <ArtifactSetSelector
+          metaSetId={fields.setId}
+          metaQuality={fields.quality}
+        />
+        <ArtifactTypeSelector meta={fields.typeId} />
+        <ArtifactMainOptionSelector
+          meta={fields.mainOption}
+          typeId={fields.typeId.value}
+        />
         <div>
-          <FormLabel htmlFor="typeId" labelName="装備部位" />
-          <Select
-            name="typeId"
-            onValueChange={(value) =>
-              setRegisterArtifactData({
-                ...registerArtifactData,
-                type: value,
-                mainOption: "",
-              })
-            }
-          >
-            <SelectTrigger id="typeId">
-              <SelectValue placeholder="装備部位の選択" />
-            </SelectTrigger>
-            <SelectContent>
-              {artifactTypes.map((type) => (
-                <SelectItem key={type.id} value={type.id}>
-                  {type.nameJp}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <FormLabel labelName="サブオプション" />
+          {subOptionFields.map((field) => (
+            <SubOptionSelector key={field.key} meta={field} />
+          ))}
         </div>
-        <div>
-          <FormLabel htmlFor="mainOption" labelName="メインオプション" />
-          <Select
-            name="mainOption"
-            onValueChange={(value) =>
-              setRegisterArtifactData({
-                ...registerArtifactData,
-                mainOption: value,
-              })
-            }
-          >
-            <SelectTrigger id="mainOption">
-              <SelectValue placeholder="メインオプションの選択" />
-            </SelectTrigger>
-            <SelectContent>
-              {registerArtifactData.type ? (
-                mainStatuses
-                  .filter((stat) =>
-                    stat.type.includes(registerArtifactData.type)
-                  )
-                  .map((stat) => (
-                    <SelectItem key={stat.id} value={stat.nameJp}>
-                      {stat.nameJp}
-                    </SelectItem>
-                  ))
-              ) : (
-                <div className="py-6 text-center text-sm">
-                  装備部位を選択してください
-                </div>
-              )}
-            </SelectContent>
-          </Select>
-        </div>
-        <SubOptionSelector />
         <CardFooter className="px-0 pt-6">
           <Button type="submit" className="w-full">
             Register Artifact

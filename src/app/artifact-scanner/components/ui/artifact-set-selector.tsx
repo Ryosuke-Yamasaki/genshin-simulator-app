@@ -15,40 +15,73 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { FC, useRef } from "react";
 import FormLabel from "./form-label";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   artifactSetDataState,
   filteredArtifactSetsState,
   qualityFilterState,
-  registerArtifactDataState,
 } from "../../state";
 import { Input } from "@/components/ui/input";
+import {
+  FieldMetadata,
+  unstable_useControl as useControl,
+} from "@conform-to/react";
 
-const ArtifactSetSelector = () => {
-  const [open, setOpen] = useState(false);
+interface ArtifactSetSelectorProps {
+  metaSetId: FieldMetadata<string>;
+  metaQuality: FieldMetadata<string>;
+}
+
+const ArtifactSetSelector: FC<ArtifactSetSelectorProps> = ({
+  metaSetId,
+  metaQuality,
+}) => {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const controlSetId = useControl(metaSetId);
+  const controlQuality = useControl(metaQuality);
+
   const [qualityFilter, setQualityFilter] = useRecoilState(qualityFilterState);
-  const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
-    registerArtifactDataState
-  );
+
   const artifactSets = useRecoilValue(artifactSetDataState);
   const filteredArtifactSets = useRecoilValue(filteredArtifactSetsState);
 
   return (
     <div>
-      <FormLabel htmlFor="setId" labelName="セット効果" />
-      <Popover open={open} onOpenChange={setOpen}>
+      <Input
+        className="sr-only"
+        aria-hidden
+        tabIndex={-1}
+        ref={controlSetId.register}
+        name={metaSetId.name}
+        defaultValue={metaSetId.initialValue}
+        onFocus={() => {
+          triggerRef.current?.focus();
+        }}
+      />
+      <Input
+        className="sr-only"
+        aria-hidden
+        tabIndex={-1}
+        ref={controlQuality.register}
+        name={metaQuality.name}
+        defaultValue={metaQuality.initialValue}
+        onFocus={() => {
+          triggerRef.current?.focus();
+        }}
+      />
+      <FormLabel htmlFor={metaSetId.id} labelName="セット効果" />
+      <Popover>
         <PopoverTrigger asChild>
           <Button
-            id="setId"
+            ref={triggerRef}
             variant="outline"
             role="combobox"
-            aria-expanded={open}
             className="w-full mt-1 justify-between"
           >
-            {registerArtifactData.set
-              ? artifactSets.find((set) => set.id === registerArtifactData.set)
+            {controlSetId.value
+              ? artifactSets.find((set) => set.id === controlSetId.value)
                   ?.nameJp
               : "セット効果の選択"}
             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -87,20 +120,16 @@ const ArtifactSetSelector = () => {
                           <CommandItem
                             key={set.id}
                             value={set.id}
-                            onSelect={(value) => {
-                              setRegisterArtifactData({
-                                ...registerArtifactData,
-                                set: value,
-                                quality: set.quality,
-                              });
-                              setOpen(false);
+                            onSelect={() => {
+                              controlSetId.change(set.id);
+                              controlQuality.change(set.quality);
                             }}
                           >
                             {set.nameJp}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                registerArtifactData.set === set.id
+                                controlSetId.value === set.id
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
@@ -114,12 +143,6 @@ const ArtifactSetSelector = () => {
           </Command>
         </PopoverContent>
       </Popover>
-      <Input type="hidden" name="setId" value={registerArtifactData.set} />
-      <Input
-        type="hidden"
-        name="quality"
-        value={registerArtifactData.quality}
-      />
     </div>
   );
 };
