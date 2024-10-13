@@ -1,87 +1,85 @@
 import {
+  getInputProps,
+  unstable_useControl as useControl,
+  type FieldMetadata,
+} from "@conform-to/react";
+import { useRef, type ElementRef, FC } from "react";
+import {
+  SelectTrigger,
   Select,
+  SelectValue,
   SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
-import FormLabel from "./form-label";
-import { Input } from "@/components/ui/input";
-import { useRecoilState } from "recoil";
-import { registerArtifactDataState } from "../../state";
 import { subStatuses } from "../../data/artifact-data";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
-const SubOptionSelector = () => {
-  const [registerArtifactData, setRegisterArtifactData] = useRecoilState(
-    registerArtifactDataState
+interface SubOptionSelectorProps {
+  meta: FieldMetadata<{ attribute: string; value: string }>;
+}
+
+const SubOptionSelector: FC<SubOptionSelectorProps> = ({ meta }) => {
+  const metaField = meta.getFieldset();
+  const selectRef = useRef<ElementRef<typeof SelectTrigger>>(null);
+  const controlAttribute = useControl(metaField.attribute);
+
+  const selectedStatus = subStatuses.find(
+    (stat) => stat.id === metaField.attribute.value
   );
-  const [isPercentage, setIsPercentage] = useState([
-    false,
-    false,
-    false,
-    false,
-  ]);
-
-  const handleSubOptionChange = (
-    index: number,
-    field: "attribute" | "value",
-    value: string
-  ) => {
-    const newSubOptions = [...registerArtifactData.subOptions];
-    newSubOptions[index] = { ...newSubOptions[index], [field]: value };
-    setRegisterArtifactData({
-      ...registerArtifactData,
-      subOptions: newSubOptions,
-    });
-
-    if (field === "attribute") {
-      const selectedStatus = subStatuses.find((stat) => stat.id === value);
-      const updatedIsPercentage = [...isPercentage];
-      updatedIsPercentage[index] = selectedStatus
-        ? selectedStatus.isPercentage
-        : false;
-      setIsPercentage(updatedIsPercentage);
-    }
-  };
 
   return (
-    <div>
-      <FormLabel labelName="サブオプション" />
-      {registerArtifactData.subOptions.map((subOption, index) => (
-        <div key={index} className="flex space-x-2">
-          <Select
-            name={`subAttribute${index}`}
-            onValueChange={(value) => {
-              handleSubOptionChange(index, "attribute", value);
-            }}
-          >
-            <SelectTrigger className="w-[294px]">
-              <SelectValue placeholder="サブオプションの選択" />
-            </SelectTrigger>
-            <SelectContent>
-              {subStatuses.map((stat) => (
-                <SelectItem key={stat.id} value={stat.id}>
-                  {stat.nameJp}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Input
-            type="text"
-            name={`subValue${index}`}
-            value={subOption.value}
-            onChange={(e) =>
-              handleSubOptionChange(index, "value", e.target.value)
-            }
-            className={cn("w-24 text-center", isPercentage[index] && "w-16")}
-          />
-          {isPercentage[index] && (
-            <div className="mt-1 py-2 text-sm text-gray-500">%</div>
-          )}
-        </div>
-      ))}
+    <div key={meta.key} className="flex">
+      <select
+        name={metaField.attribute.name}
+        defaultValue={metaField.attribute.initialValue ?? ""}
+        className="sr-only"
+        ref={controlAttribute.register}
+        aria-hidden
+        tabIndex={-1}
+        onFocus={() => {
+          selectRef.current?.focus();
+        }}
+      >
+        <option value="" />
+        {subStatuses.map((type) => (
+          <option key={type.id} value={type.id} />
+        ))}
+      </select>
+      <Select
+        value={controlAttribute.value ?? ""}
+        onValueChange={controlAttribute.change}
+        onOpenChange={(open) => {
+          if (!open) {
+            controlAttribute.blur();
+          }
+        }}
+      >
+        <SelectTrigger className="w-[294px]">
+          <SelectValue placeholder="サブオプションの選択" />
+        </SelectTrigger>
+        <SelectContent>
+          {subStatuses.map((stat) => (
+            <SelectItem key={stat.id} value={stat.id}>
+              {stat.nameJp}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Input
+        className={cn(
+          "w-24 text-center ml-2",
+          selectedStatus?.isPercentage && "w-16"
+        )}
+        {...getInputProps(metaField.value, {
+          type: "text",
+          ariaAttributes: true,
+        })}
+        key={metaField.value.key}
+      />
+      {selectedStatus?.isPercentage && (
+        <div className="mt-1 ml-2 py-2 text-sm text-gray-500">%</div>
+      )}
     </div>
   );
 };
