@@ -1,5 +1,4 @@
 import { prisma } from "@/prisma";
-import { Artifacter } from "@prisma/client";
 import "server-only";
 
 export const getArtifactSets = async () => {
@@ -10,7 +9,7 @@ export const getArtifactSets = async () => {
   return artifactSets;
 };
 
-export const postArtifacter = async (data: Artifacter) => {
+export const postArtifacter = async (data: artifacter) => {
   const { id } = await prisma.artifacter.create({ data });
 
   return id;
