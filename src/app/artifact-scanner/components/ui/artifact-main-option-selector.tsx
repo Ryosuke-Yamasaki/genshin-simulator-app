@@ -54,7 +54,7 @@ const ArtifactMainOptionSelector: FC<ArtifactMainOptionSelectorProps> = ({
         }}
       >
         <SelectTrigger>
-          <SelectValue placeholder="装備部位の選択" />
+          <SelectValue placeholder="メインオプションの選択" />
         </SelectTrigger>
         <SelectContent>
           {typeId ? (
