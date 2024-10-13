@@ -2,7 +2,7 @@ import {
   unstable_useControl as useControl,
   type FieldMetadata,
 } from "@conform-to/react";
-import { useRef, type ElementRef, ComponentProps, FC } from "react";
+import { useRef, type ElementRef, FC } from "react";
 import {
   SelectTrigger,
   Select,

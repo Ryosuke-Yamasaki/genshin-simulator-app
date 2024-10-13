@@ -14,7 +14,6 @@ export const registerArtifact = async (
 
   if (submission.status !== "success") return submission.reply();
 
-  const data = Object.fromEntries(formData);
   const session = await auth();
 
   const setId = formData.get("setId") as string;
