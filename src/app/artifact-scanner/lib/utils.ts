@@ -84,7 +84,7 @@ export const importArtifactData = async (imagePath: string) => {
   });
 };
 
-export const getMainOption = (quality: number, name: string) => {
+export const getMainOption = (quality: string, name: string) => {
   return mainOptions.find(
     (stat) => stat.quality === quality && stat.nameJp === name
   );
