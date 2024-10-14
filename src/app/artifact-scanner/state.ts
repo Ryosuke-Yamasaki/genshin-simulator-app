@@ -1,3 +1,4 @@
+import { ArtifactSet } from "@prisma/client";
 import { atom, selector } from "recoil";
 
 export const previewState = atom<string | null>({
@@ -20,7 +21,7 @@ export const qualityFilterState = atom<string[]>({
   default: ["5"],
 });
 
-export const artifactSetDataState = atom<artifactSet[]>({
+export const artifactSetDataState = atom<ArtifactSet[]>({
   key: "artifactSetDataState",
   default: [],
 });

@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import ImageUploadForm from "./components/image-upload-form";
 import PreviewArtifact from "./components/preview-artifact";
-import { getArtifactSets } from "./lib/fetcher";
+import { getArtifactSets } from "./lib/prisma";
 import RegisterArtifactForm from "./components/register-artifact-form";
 
 const ArtifactScannerPage = async () => {
