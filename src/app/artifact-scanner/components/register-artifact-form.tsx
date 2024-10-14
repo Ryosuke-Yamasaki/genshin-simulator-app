@@ -16,9 +16,10 @@ import { postArtifacterSchema } from "../schema";
 import ArtifactTypeSelector from "./ui/artifact-type-selector";
 import ArtifactMainOptionSelector from "./ui/artifact-main-option-selector";
 import FormLabel from "./ui/form-label";
+import { ArtifactSet } from "@prisma/client";
 
 interface RegisterArtifactFormProps {
-  artifactSets: artifactSet[];
+  artifactSets: ArtifactSet[];
 }
 
 const RegisterArtifactForm: FC<RegisterArtifactFormProps> = ({
