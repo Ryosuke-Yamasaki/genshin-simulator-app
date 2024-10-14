@@ -12,11 +12,3 @@ type ImportArtifactData = {
   subOption4: Status;
   [key: string]: string | Status;
 };
-
-type RegisterArtifactData = {
-  set: string;
-  quality: string;
-  type: string;
-  mainOption: string;
-  subOptions: Status[];
-};

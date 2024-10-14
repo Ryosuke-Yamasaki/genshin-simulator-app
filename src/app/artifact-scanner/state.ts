@@ -15,17 +15,6 @@ export const imageState = atom<File | null>({
   default: null,
 });
 
-export const registerArtifactDataState = atom<RegisterArtifactData>({
-  key: "registerArtifactDataState",
-  default: {
-    set: "",
-    quality: "",
-    type: "",
-    mainOption: "",
-    subOptions: Array(4).fill({ attribute: "", value: "" }),
-  },
-});
-
 export const qualityFilterState = atom<string[]>({
   key: "qualityFilterState",
   default: ["5"],
