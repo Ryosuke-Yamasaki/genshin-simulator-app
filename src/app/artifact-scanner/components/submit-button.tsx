@@ -1,4 +1,8 @@
-import { artifactDataState, imageState, previewState } from "@/atoms/ocr";
+import {
+  importArtifactDataState,
+  imageState,
+  previewState,
+} from "@/app/artifact-scanner/state";
 import { Button } from "@/components/ui/button";
 
 import { useTransition } from "react";
@@ -8,7 +12,7 @@ import { importArtifactData } from "../lib/utils";
 const SubmitButton = () => {
   const preview = useRecoilValue(previewState);
   const image = useRecoilValue(imageState);
-  const setArtifactData = useSetRecoilState(artifactDataState);
+  const setArtifactData = useSetRecoilState(importArtifactDataState);
   const [isPending, startTransition] = useTransition();
 
   const handleImportImage = () => {

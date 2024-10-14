@@ -1,18 +1,13 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import SubmitButton from "./submit-button";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { imageState, previewState } from "@/atoms/ocr";
+import { imageState, previewState } from "@/app/artifact-scanner/state";
 import Image from "next/image";
+import FormWrapper from "./form-wrapper";
+import FormLabel from "./ui/form-label";
 
 const ImageUploadForm = () => {
   const [preview, setPreview] = useRecoilState(previewState);
@@ -34,48 +29,35 @@ const ImageUploadForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">聖遺物をインポート</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div>
-            <Label
-              htmlFor="file"
-              className="block text-sm font-medium text-gray-700"
-            >
-              画像を選択
-            </Label>
-            <Input
-              id="file"
-              name="file"
-              type="file"
-              accept="image/*"
-              onChange={handleChange}
-              className="mt-1"
+    <FormWrapper formTitle="聖遺物のインポート">
+      <div className="space-y-4">
+        <div>
+          <FormLabel htmlFor="file" labelName="画像の選択" />
+          <Input
+            id="file"
+            name="file"
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </div>
+        {preview && (
+          <div className="mt-4">
+            <FormLabel labelName="プレビュー" />
+            <Image
+              src={preview}
+              alt="プレビュー"
+              width={500}
+              height={500}
+              className="max-w-full h-auto mt-1 rounded-lg border border-gray-200"
             />
           </div>
-          {preview && (
-            <div className="mt-4">
-              <Label className="block text-sm font-medium text-gray-700">
-                プレビュー
-              </Label>
-              <Image
-                src={preview}
-                alt="プレビュー"
-                width={500}
-                height={500}
-                className="max-w-full h-auto rounded-lg border border-gray-200"
-              />
-            </div>
-          )}
-        </div>
-        <CardFooter className="px-0 pt-6">
-          <SubmitButton />
-        </CardFooter>
-      </CardContent>
-    </Card>
+        )}
+      </div>
+      <CardFooter className="px-0 pt-6">
+        <SubmitButton />
+      </CardFooter>
+    </FormWrapper>
   );
 };
 

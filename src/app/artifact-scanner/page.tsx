@@ -2,18 +2,18 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import ImageUploadForm from "./components/image-upload-form";
 import PreviewArtifact from "./components/preview-artifact";
-import { fetchArtifacts } from "./fetcher";
+import { getArtifactSets } from "./lib/fetcher";
+import RegisterArtifactForm from "./components/register-artifact-form";
 
 const ArtifactScannerPage = async () => {
   const session = await auth();
   if (!session) return redirect("/");
 
-  const artifacts = await fetchArtifacts();
-  console.log(artifacts);
+  const artifactSets = await getArtifactSets();
 
   return (
-    <div className="flex mx-10">
-      ArtifactScannerPage
+    <div className="flex">
+      <RegisterArtifactForm artifactSets={artifactSets} />
       <ImageUploadForm />
       <PreviewArtifact />
     </div>

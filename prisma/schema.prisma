@@ -97,6 +97,7 @@ model ArtifactSet {
   id        String     @id
   nameJp    String     @map("name_jp")
   nameEn    String     @map("name_en")
+  quality   String
   artifacts Artifact[]
 
   @@map("artifact_sets")
@@ -113,21 +114,32 @@ model ArtifactType {
 
 model MainOption {
   id          String       @id
-  rarity      String
-  attribute   String
-  value       String
+  nameJp      String       @map("name_jp")
+  nameEn      String       @map("name_en")
+  quality     String
+  value       Decimal      @db.Decimal(10, 5)
   artifacters Artifacter[]
 
   @@map("main_options")
 }
 
 model SubOption {
-  id           String @id @default(cuid())
-  artifacterId String @map("artifacter_id")
-  attribute    String
-  value        String
+  id           String  @id @default(cuid())
+  artifacterId String  @map("artifacter_id")
+  subStatusId  String  @map("sub_status_id")
+  value        Decimal @db.Decimal(10, 5)
 
   artifacter Artifacter @relation(fields: [artifacterId], references: [id])
+  subStatus  SubStatus  @relation(fields: [subStatusId], references: [id])
 
   @@map("sub_options")
+}
+
+model SubStatus {
+  id         String      @id
+  nameJp     String      @map("name_jp")
+  nameEn     String      @map("name_en")
+  subOptions SubOption[]
+
+  @@map("sub_statuses")
 }
