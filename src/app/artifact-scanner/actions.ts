@@ -29,9 +29,7 @@ export const registerArtifact = async (
     )?.id!,
   };
 
-  const id = postArtifacter(artifacter);
-
-  const artifacterId = await id;
+  const id = await postArtifacter(artifacter);
 
   const subOptions = data.subOptions as Status[];
   const formattedData = subOptions.map(({ attribute, value, ...rest }) => {
@@ -43,7 +41,7 @@ export const registerArtifact = async (
       ...rest,
       subStatusId: attribute,
       value: formattedValue as number,
-      artifacterId,
+      artifacterId: id,
     };
   });
 
