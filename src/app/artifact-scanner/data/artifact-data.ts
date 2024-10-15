@@ -274,3 +274,8 @@ export const mainStatuses = [
   { id: "17", nameJp: "会心ダメージ", nameEn: "CRIT DMG", type: ["5"] },
   { id: "18", nameJp: "与える治療効果", nameEn: "Healing Bonus", type: ["5"] },
 ];
+
+export const multipliers: { [key: string]: number } = {
+  "9": 200,
+  "10": 100,
+};

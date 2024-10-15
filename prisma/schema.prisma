@@ -70,6 +70,7 @@ model Artifacter {
   userId       String      @map("user_id")
   artifactId   String      @map("artifact_id")
   mainOptionId String      @map("main_option_id")
+  score        Decimal     @db.Decimal(10, 5)
   subOptions   SubOption[]
 
   mainOption MainOption @relation(fields: [mainOptionId], references: [id])
@@ -129,7 +130,7 @@ model SubOption {
   subStatusId  String  @map("sub_status_id")
   value        Decimal @db.Decimal(10, 5)
 
-  artifacter Artifacter @relation(fields: [artifacterId], references: [id])
+  artifacter Artifacter @relation(fields: [artifacterId], references: [id], onDelete: Cascade)
   subStatus  SubStatus  @relation(fields: [subStatusId], references: [id])
 
   @@map("sub_options")

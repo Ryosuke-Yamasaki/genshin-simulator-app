@@ -3,6 +3,17 @@ type Status = {
   value: string;
 };
 
+type RegisterArtifactData = {
+  setId: string;
+  quality: string;
+  typeId: string;
+  mainOption: string;
+  subOptions: {
+    value: string;
+    attribute: string;
+  }[];
+};
+
 type ImportArtifactData = {
   name: string;
   mainOption: Status;

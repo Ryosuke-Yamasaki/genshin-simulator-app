@@ -2,6 +2,7 @@ type artifacter = {
   userId: string;
   artifactId: string;
   mainOptionId: string;
+  score: number;
 };
 
 type subOption = {

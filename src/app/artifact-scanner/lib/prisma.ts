@@ -2,21 +2,29 @@ import { prisma } from "@/prisma";
 import "server-only";
 
 export const getArtifactByName = async (name: string) => {
-  const artifact = await prisma.artifact.findFirst({
-    select: {
-      id: true,
-      nameJp: true,
-      nameEn: true,
-      set: {
-        select: {
-          quality: true,
+  try {
+    const artifact = await prisma.artifact.findFirst({
+      select: {
+        id: true,
+        nameJp: true,
+        nameEn: true,
+        set: {
+          select: {
+            quality: true,
+          },
         },
       },
-    },
-    where: { nameEn: name },
-  });
+      where: { nameEn: name },
+    });
 
-  return artifact;
+    if (!artifact) {
+      throw new Error("Artifact not found");
+    }
+
+    return artifact;
+  } catch (error) {
+    throw new Error(`Error fetching artifact:${error}`);
+  }
 };
 
 export const getArtifactSets = async () => {

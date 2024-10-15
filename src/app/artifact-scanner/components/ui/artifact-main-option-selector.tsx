@@ -40,7 +40,7 @@ const ArtifactMainOptionSelector: FC<ArtifactMainOptionSelectorProps> = ({
       >
         <option value="" />
         {mainStatuses.map((stat) => (
-          <option key={stat.id} value={stat.nameJp} />
+          <option key={stat.id} value={stat.nameEn} />
         ))}
       </select>
       <FormLabel htmlFor={meta.id} labelName="メインオプション" />
@@ -61,7 +61,7 @@ const ArtifactMainOptionSelector: FC<ArtifactMainOptionSelectorProps> = ({
             mainStatuses
               .filter((stat) => stat.type.includes(typeId))
               .map((stat) => (
-                <SelectItem key={stat.id} value={stat.nameJp}>
+                <SelectItem key={stat.id} value={stat.nameEn}>
                   {stat.nameJp}
                 </SelectItem>
               ))
