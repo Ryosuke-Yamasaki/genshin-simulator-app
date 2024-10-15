@@ -45,7 +45,7 @@ export const insertArtifacter = async (
   if (!session || !session.user?.id) redirect("/");
   const score = calculateScore(subOptions);
 
-  const artifacter: artifacter = {
+  const artifacter = {
     userId: session.user.id,
     artifactId,
     mainOptionId: getMainOptionId(quality, mainOption),
@@ -56,7 +56,7 @@ export const insertArtifacter = async (
 
   const formattedData = subOptions.map(({ attribute, value, ...rest }) => ({
     ...rest,
-    subStatusId: attribute,
+    subStatusId: Number(attribute),
     value,
     artifacterId: id,
   }));
