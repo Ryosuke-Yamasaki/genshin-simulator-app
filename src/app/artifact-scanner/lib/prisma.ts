@@ -35,31 +35,6 @@ export const getArtifactSets = async () => {
   return artifactSets;
 };
 
-export const getArtifacters = async () => {
-  const artifacters = await prisma.artifacter.findMany({
-    select: {
-      artifact: {
-        select: {
-          nameJp: true,
-          set: {
-            select: {
-              nameJp: true,
-            },
-          },
-        },
-      },
-      mainOption: {
-        select: {
-          nameJp: true,
-          value: true,
-        },
-      },
-    },
-  });
-
-  return artifacters;
-};
-
 export const postArtifacter = async (data: artifacter) => {
   const { id } = await prisma.artifacter.create({ data });
 
