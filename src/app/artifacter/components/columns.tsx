@@ -2,10 +2,15 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Artfiacter } from "../types/prisma";
+import { Button } from "@/components/ui/button";
+import {
+  CaretDownIcon,
+  CaretSortIcon,
+  CaretUpIcon,
+} from "@radix-ui/react-icons";
 
 export const columns: ColumnDef<Artfiacter>[] = [
   { accessorKey: "id", header: "id" },
-  { accessorKey: "score", header: "score" },
   {
     id: "artifact",
     accessorFn: (row) => row.artifact.nameJp,
@@ -45,5 +50,23 @@ export const columns: ColumnDef<Artfiacter>[] = [
         })
         .join(", "),
     header: "subOptions",
+  },
+  {
+    accessorKey: "score",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        score
+        {column.getIsSorted() === "desc" ? (
+          <CaretDownIcon className="ml-2 h-4 w-4" />
+        ) : column.getIsSorted() === "asc" ? (
+          <CaretUpIcon className="ml-2 h-4 w-4" />
+        ) : (
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        )}
+      </Button>
+    ),
   },
 ];
