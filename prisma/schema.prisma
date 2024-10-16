@@ -137,10 +137,11 @@ model SubOption {
 }
 
 model SubStatus {
-  id         Int         @id
-  nameJp     String      @map("name_jp")
-  nameEn     String      @map("name_en")
-  subOptions SubOption[]
+  id           Int         @id
+  nameJp       String      @map("name_jp")
+  nameEn       String      @map("name_en")
+  isPercentage Boolean     @map("is_percentage")
+  subOptions   SubOption[]
 
   @@map("sub_statuses")
 }
