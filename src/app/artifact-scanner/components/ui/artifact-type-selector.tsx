@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import FormLabel from "./form-label";
-import { artifactTypes } from "../../data/artifact-data";
+import { artifactTypes } from "../../../data/artifact-data";
 
 interface ArtifactTypeSelectorProps {
   meta: FieldMetadata<string>;

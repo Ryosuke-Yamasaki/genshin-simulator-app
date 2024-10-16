@@ -11,7 +11,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { subStatuses } from "../../data/artifact-data";
+import { subStatuses } from "../../../data/artifact-data";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 

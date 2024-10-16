@@ -1,4 +1,8 @@
-import { mainOptions, multipliers, subStatuses } from "../data/artifact-data";
+import {
+  mainOptions,
+  multipliers,
+  subStatuses,
+} from "../../data/artifact-data";
 
 export const getMainOptionId = (quality: string, name: string) => {
   const option = mainOptions.find(
