@@ -1,20 +1,21 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Artfiacter } from "../types/prisma";
+import { Artfiacter, subOption } from "../types/prisma";
 import { Button } from "@/components/ui/button";
 import {
   CaretDownIcon,
   CaretSortIcon,
   CaretUpIcon,
 } from "@radix-ui/react-icons";
+import Image from "next/image";
 
 export const columns: ColumnDef<Artfiacter>[] = [
   { accessorKey: "id", header: "id" },
   {
     id: "artifact",
     accessorFn: (row) => row.artifact.nameJp,
-    header: "artifact",
+    header: "名前",
   },
   {
     id: "artifactSet",
@@ -24,32 +25,12 @@ export const columns: ColumnDef<Artfiacter>[] = [
   {
     id: "artifactType",
     accessorFn: (row) => row.artifact.type.nameJp,
-    header: "artifactType",
+    header: "部位",
   },
   {
     id: "mainOption",
     accessorFn: (row) => row.mainOption.nameJp,
-    header: "mainOption",
-  },
-  {
-    id: "subOptions",
-    accessorFn: (row) =>
-      row.subOptions
-        .map((option) => {
-          const attribute = ["%", "実数"].some((keyword) =>
-            option.subStatus.nameJp.includes(keyword)
-          )
-            ? option.subStatus.nameJp.replace(/%|実数/g, "").trim()
-            : option.subStatus.nameJp;
-
-          const value = option.subStatus.isPercentage
-            ? `${(Number(option.value) * 100).toFixed(1)}%`
-            : option.value;
-
-          return `${attribute}+${value}`;
-        })
-        .join(", "),
-    header: "subOptions",
+    header: "メインオプション",
   },
   {
     accessorKey: "score",
@@ -57,8 +38,9 @@ export const columns: ColumnDef<Artfiacter>[] = [
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0"
       >
-        score
+        スコア
         {column.getIsSorted() === "desc" ? (
           <CaretDownIcon className="ml-2 h-4 w-4" />
         ) : column.getIsSorted() === "asc" ? (
@@ -68,5 +50,33 @@ export const columns: ColumnDef<Artfiacter>[] = [
         )}
       </Button>
     ),
+  },
+  {
+    id: "subOptions",
+    accessorFn: (row) => row.subOptions,
+    header: "サブオプション",
+    cell: ({ row }) => {
+      const subOptions = row.getValue("subOptions") as subOption[];
+      return (
+        <div className="grid grid-cols-4 gap-4">
+          {subOptions.map((option) => (
+            <div key={option.id} className="flex space-x-1">
+              <Image
+                src={`https://ayuqpemrfahcziukatay.supabase.co/storage/v1/object/public/image/status/status_${option.subStatusId}.png`}
+                alt="statusIcon"
+                width={32}
+                height={32}
+                className="bg-black rounded-sm items-center w-5 h-5"
+              />
+              <div>
+                {option.subStatus.isPercentage
+                  ? `${(Number(option.value) * 100).toFixed(1)}%`
+                  : option.value.toString()}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    },
   },
 ];
