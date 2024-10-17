@@ -22,31 +22,35 @@ const DataTablePagination = <TData,>({
   table,
 }: DataTablePaginationProps<TData>) => {
   return (
-    <div className="flex items-center justify-end px-2">
+    <div className="flex items-center justify-end">
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <div className="text-sm text-nowrap font-medium">Rows per page</div>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value));
             }}
           >
-            <SelectTrigger className="mt-0">
+            <SelectTrigger className="mt-0 h-8 space-x-2">
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
               {[10, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
+                  {pageSize} 行
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+          {table.getState().pagination.pageIndex + 1} -{" "}
+          {table.getState().pagination.pageSize > table.getRowCount() ? (
+            <>{table.getRowCount()}</>
+          ) : (
+            <>{table.getState().pagination.pageSize}</>
+          )}{" "}
+          / {table.getRowCount()} 件
         </div>
         <div className="flex items-center space-x-2">
           <Button
