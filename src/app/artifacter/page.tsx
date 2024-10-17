@@ -11,7 +11,7 @@ const ArtifacterPage = async () => {
   const artifacter = await getArtifactersByUser(session.user.id);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="mx-6 py-10">
       <DataTable columns={columns} data={artifacter} />
     </div>
   );
