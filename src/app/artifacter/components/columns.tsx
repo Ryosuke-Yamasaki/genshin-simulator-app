@@ -57,9 +57,16 @@ export const columns: ColumnDef<Artfiacter>[] = [
     header: "サブオプション",
     cell: ({ row }) => {
       const subOptions = row.getValue("subOptions") as subOption[];
+      const cleanedSubOptions = subOptions.map((option) => ({
+        ...option,
+        value: option.subStatus.isPercentage
+          ? `${(option.value * 100).toFixed(1)}%`
+          : option.value,
+      }));
+
       return (
         <div className="grid grid-cols-4 gap-4">
-          {subOptions.map((option) => (
+          {cleanedSubOptions.map((option) => (
             <div key={option.id} className="flex space-x-1">
               <Image
                 src={`https://ayuqpemrfahcziukatay.supabase.co/storage/v1/object/public/image/status/status_${option.subStatusId}.png`}
@@ -68,11 +75,7 @@ export const columns: ColumnDef<Artfiacter>[] = [
                 height={32}
                 className="bg-black rounded-sm items-center w-5 h-5"
               />
-              <div>
-                {option.subStatus.isPercentage
-                  ? `${(Number(option.value) * 100).toFixed(1)}%`
-                  : option.value.toString()}
-              </div>
+              <div>{option.value}</div>
             </div>
           ))}
         </div>
