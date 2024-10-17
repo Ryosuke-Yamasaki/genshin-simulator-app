@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { subStatuses } from "@/app/data/artifact-data";
 import DataTableSubStatusSortOption from "./ui/data-table-sub-status-sort-option";
+import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Artfiacter>[] = [
   {
@@ -73,7 +74,7 @@ export const columns: ColumnDef<Artfiacter>[] = [
     id: "subOptions",
     accessorFn: (row) => row.subOptions,
     header: ({ table }) => <DataTableSubStatusSortOption table={table} />,
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const subOptions = row.getValue("subOptions") as subOption[];
       const cleanedSubOptions = subOptions.map((option) => ({
         ...option,
@@ -93,7 +94,17 @@ export const columns: ColumnDef<Artfiacter>[] = [
                 height={32}
                 className="bg-black rounded-sm items-center w-5 h-5"
               />
-              <div>{option.value}</div>
+              <div
+                className={cn(
+                  table
+                    .getState()
+                    .sorting.find((sort) =>
+                      sort.id.includes(option.subStatus.nameJp)
+                    ) && "font-semibold underline"
+                )}
+              >
+                {option.value}
+              </div>
             </div>
           ))}
         </div>
