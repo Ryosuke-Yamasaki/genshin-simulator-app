@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, FilterFn, FilterFnOption } from "@tanstack/react-table";
 import { Artifacter, subOption } from "../types/prisma";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,16 @@ import Image from "next/image";
 import { subStatuses } from "@/app/data/artifact-data";
 import DataTableSubStatusSortOption from "./ui/data-table-sub-status-sort-option";
 import { cn } from "@/lib/utils";
+
+const multiSelectFilter: FilterFnOption<Artifacter> = (
+  row,
+  columnId,
+  filterValue: string[]
+) => {
+  if (!filterValue.length) return true;
+  const rowValue = row.getValue(columnId);
+  return !!filterValue.find((option) => option === rowValue);
+};
 
 export const columns: ColumnDef<Artifacter>[] = [
   {
@@ -32,18 +42,21 @@ export const columns: ColumnDef<Artifacter>[] = [
     header: "artifactSet",
     enableSorting: false,
     enableHiding: false,
+    filterFn: multiSelectFilter,
   },
   {
     id: "artifactType",
     accessorFn: (row) => row.artifact.type.nameJp,
     header: "部位",
     enableSorting: false,
+    filterFn: multiSelectFilter,
   },
   {
     id: "mainOption",
     accessorFn: (row) => row.mainOption.nameJp,
     header: "メインオプション",
     enableSorting: false,
+    filterFn: multiSelectFilter,
   },
   {
     accessorKey: "score",
