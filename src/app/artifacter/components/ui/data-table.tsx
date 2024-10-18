@@ -56,6 +56,7 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
+                <TableHead>#</TableHead>
                 {headerGroup.headers
                   .filter((header) => header.column.getCanHide() === true)
                   .map((header) => {
@@ -75,11 +76,12 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
+                  <TableCell>{index + 1}</TableCell>
                   {row
                     .getVisibleCells()
                     .filter((cell) => cell.column.getCanHide() === true)

@@ -15,12 +15,6 @@ import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Artfiacter>[] = [
   {
-    accessorKey: "number",
-    header: "#",
-    cell: ({ row }) => <div>{row.index + 1}</div>,
-    enableSorting: false,
-  },
-  {
     accessorKey: "id",
     header: "artifacterId",
     enableSorting: false,
