@@ -69,6 +69,11 @@ export const columns: ColumnDef<Artfiacter>[] = [
         )}
       </Button>
     ),
+    cell: ({ row }) => {
+      const score = parseFloat(row.getValue("score"));
+
+      return <div>{score.toFixed(1)}</div>;
+    },
   },
   {
     id: "subOptions",
