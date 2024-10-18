@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Artfiacter, subOption } from "../types/prisma";
+import { Artifacter, subOption } from "../types/prisma";
 import { Button } from "@/components/ui/button";
 import {
   CaretDownIcon,
@@ -13,7 +13,7 @@ import { subStatuses } from "@/app/data/artifact-data";
 import DataTableSubStatusSortOption from "./ui/data-table-sub-status-sort-option";
 import { cn } from "@/lib/utils";
 
-export const columns: ColumnDef<Artfiacter>[] = [
+export const columns: ColumnDef<Artifacter>[] = [
   {
     accessorKey: "id",
     header: "artifacterId",
@@ -113,7 +113,7 @@ export const columns: ColumnDef<Artfiacter>[] = [
   },
   ...subStatuses.map((stat) => ({
     id: stat.nameJp,
-    accessorFn: (row: Artfiacter) => {
+    accessorFn: (row: Artifacter) => {
       const subOption = row.subOptions.find(
         (option) => option.subStatusId === Number(stat.id)
       );

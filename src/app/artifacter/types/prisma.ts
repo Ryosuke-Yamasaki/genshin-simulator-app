@@ -23,4 +23,4 @@ export const artifacterParams =
     },
   });
 
-export type Artfiacter = Prisma.ArtifacterGetPayload<typeof artifacterParams>;
+export type Artifacter = Prisma.ArtifacterGetPayload<typeof artifacterParams>;
