@@ -57,7 +57,7 @@ export const insertArtifacter = async (
   const formattedData = subOptions.map(({ attribute, value, ...rest }) => ({
     ...rest,
     subStatusId: Number(attribute),
-    value,
+    value: Number(value),
     artifacterId: id,
   }));
 
@@ -90,8 +90,8 @@ export const importArtifact = async (
   const buffer = Buffer.from(data);
 
   const regions = {
-    name: { left: 1307, top: 120, width: 593, height: 58 },
-    mainOption: { left: 1307, top: 267, width: 273, height: 30 },
+    name: { left: 1335, top: 120, width: 440, height: 58 },
+    mainOption: { left: 1335, top: 267, width: 273, height: 30 },
     subOptions: [
       { left: 1355, top: 475, width: 445, height: 39 },
       { left: 1355, top: 514, width: 445, height: 39 },

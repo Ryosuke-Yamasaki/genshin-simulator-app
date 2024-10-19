@@ -70,7 +70,7 @@ model Artifacter {
   userId       String      @map("user_id")
   artifactId   String      @map("artifact_id")
   mainOptionId Int         @map("main_option_id")
-  score        Decimal     @db.Decimal(10, 5)
+  score        Float
   subOptions   SubOption[]
 
   mainOption MainOption @relation(fields: [mainOptionId], references: [id])
@@ -118,17 +118,17 @@ model MainOption {
   nameJp      String       @map("name_jp")
   nameEn      String       @map("name_en")
   quality     String
-  value       Decimal      @db.Decimal(10, 5)
+  value       Float
   artifacters Artifacter[]
 
   @@map("main_options")
 }
 
 model SubOption {
-  id           String  @id @default(cuid())
-  artifacterId String  @map("artifacter_id")
-  subStatusId  Int     @map("sub_status_id")
-  value        Decimal @db.Decimal(10, 5)
+  id           String @id @default(cuid())
+  artifacterId String @map("artifacter_id")
+  subStatusId  Int    @map("sub_status_id")
+  value        Float
 
   artifacter Artifacter @relation(fields: [artifacterId], references: [id], onDelete: Cascade)
   subStatus  SubStatus  @relation(fields: [subStatusId], references: [id])
@@ -137,10 +137,11 @@ model SubOption {
 }
 
 model SubStatus {
-  id         Int         @id
-  nameJp     String      @map("name_jp")
-  nameEn     String      @map("name_en")
-  subOptions SubOption[]
+  id           Int         @id
+  nameJp       String      @map("name_jp")
+  nameEn       String      @map("name_en")
+  isPercentage Boolean     @map("is_percentage")
+  subOptions   SubOption[]
 
   @@map("sub_statuses")
 }

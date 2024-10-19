@@ -17,18 +17,23 @@ export const getMainOptionId = (quality: string, name: string) => {
 
   return option.id;
 };
+
 export const transformSubOptions = (subOptions: string[]) => {
   return subOptions.map((stat) => {
     const [attribute, value] = stat.split("+").map((item) => item.trim());
-    const subOption = subStatuses.find((stat) => stat.nameEn === attribute);
+    const isPercentage = value.includes("%");
+    const subOption = subStatuses.find(
+      (stat) => stat.nameEn === attribute && stat.isPercentage === isPercentage
+    );
 
-    if (!subOption)
+    if (!subOption) {
       throw new Error(
         `Error: Attribute "${attribute}" not found in subStatuses.`
       );
+    }
 
-    const formattedValue = value.includes("%")
-      ? (parseFloat(value.replace("%", "")) / 100).toFixed(3)
+    const formattedValue = isPercentage
+      ? (parseFloat(value) / 100).toFixed(3)
       : value;
 
     return { attribute: subOption.id, value: formattedValue };

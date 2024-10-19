@@ -8,5 +8,5 @@ type artifacter = {
 type subOption = {
   artifacterId: string;
   subStatusId: number;
-  value: string;
+  value: number;
 };
