@@ -6,6 +6,13 @@ export const artifactParams = Prisma.validator<Prisma.ArtifactDefaultArgs>()({
 
 export type Artifact = Prisma.ArtifactGetPayload<typeof artifactParams>;
 
+export const mainOptionParams =
+  Prisma.validator<Prisma.MainOptionDefaultArgs>()({
+    include: { mainStatus: true },
+  });
+
+export type MainStatus = Prisma.MainOptionGetPayload<typeof mainOptionParams>;
+
 export const subOptionParams = Prisma.validator<Prisma.SubOptionDefaultArgs>()({
   include: { subStatus: true },
 });
@@ -16,7 +23,7 @@ export const artifacterParams =
   Prisma.validator<Prisma.ArtifacterDefaultArgs>()({
     include: {
       artifact: { include: artifactParams.include },
-      mainOption: true,
+      mainOption: { include: mainOptionParams.include },
       subOptions: {
         include: subOptionParams.include,
       },

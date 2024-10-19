@@ -110,18 +110,42 @@ model ArtifactType {
   nameEn    String     @map("name_en")
   artifacts Artifact[]
 
+  mainStatuses ArtifactTypesOnMainStatuses[]
+
   @@map("artifact_types")
 }
 
 model MainOption {
-  id          Int          @id
-  nameJp      String       @map("name_jp")
-  nameEn      String       @map("name_en")
-  quality     String
-  value       Float
-  artifacters Artifacter[]
+  id           Int          @id
+  mainStatusId Int          @map("main_status_id")
+  quality      String
+  value        Float
+  artifacters  Artifacter[]
+
+  mainStatus MainStatus @relation(fields: [mainStatusId], references: [id])
 
   @@map("main_options")
+}
+
+model MainStatus {
+  id         Int                           @id
+  nameJp     String                        @map("name_jp")
+  nameEn     String                        @map("name_en")
+  mainOption MainOption[]
+  types      ArtifactTypesOnMainStatuses[]
+
+  @@map("main_statuses")
+}
+
+model ArtifactTypesOnMainStatuses {
+  typeId       String @map("type_id")
+  mainStatusId Int    @map("main_status_id")
+
+  type       ArtifactType @relation(fields: [typeId], references: [id])
+  mainStatus MainStatus   @relation(fields: [mainStatusId], references: [id])
+
+  @@id([typeId, mainStatusId])
+  @@map("artifact_types_on_main_statuses")
 }
 
 model SubOption {

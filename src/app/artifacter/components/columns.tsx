@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef, FilterFn, FilterFnOption } from "@tanstack/react-table";
+import { ColumnDef, FilterFnOption } from "@tanstack/react-table";
 import { Artifacter, subOption } from "../types/prisma";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,7 +53,7 @@ export const columns: ColumnDef<Artifacter>[] = [
   },
   {
     id: "mainOption",
-    accessorFn: (row) => row.mainOption.nameJp,
+    accessorFn: (row) => row.mainOption.mainStatus.nameJp,
     header: "メインオプション",
     enableSorting: false,
     filterFn: multiSelectFilter,

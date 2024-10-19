@@ -21,9 +21,11 @@ const DataTableFilterOption = <TData,>({
       ])
     ).values()
   );
-  const artifactSetsOption = artifactSets.map(({ nameJp }) => {
-    return { value: nameJp, label: nameJp };
-  });
+  const artifactSetsOption = artifactSets
+    .sort((a, b) => Number(a.id) - Number(b.id))
+    .map(({ nameJp }) => {
+      return { value: nameJp, label: nameJp };
+    });
   const artifactTypes = Array.from(
     new Map(
       artifacters.map((artifacter) => [
@@ -32,20 +34,24 @@ const DataTableFilterOption = <TData,>({
       ])
     ).values()
   );
-  const artifactTypesOption = artifactTypes.map(({ nameJp }) => {
-    return { value: nameJp, label: nameJp };
-  });
+  const artifactTypesOption = artifactTypes
+    .sort((a, b) => Number(a.id) - Number(b.id))
+    .map(({ nameJp }) => {
+      return { value: nameJp, label: nameJp };
+    });
   const artifactMainStatuses = Array.from(
     new Map(
       artifacters.map((artifacter) => [
         artifacter.mainOptionId,
-        artifacter.mainOption,
+        artifacter.mainOption.mainStatus,
       ])
     ).values()
   );
-  const artifactMainStatusesOption = artifactMainStatuses.map(({ nameJp }) => {
-    return { value: nameJp, label: nameJp };
-  });
+  const artifactMainStatusesOption = artifactMainStatuses
+    .sort((a, b) => a.id - b.id)
+    .map(({ nameJp }) => {
+      return { value: nameJp, label: nameJp };
+    });
 
   return (
     <div className="flex flex-1 items-center space-x-2">
