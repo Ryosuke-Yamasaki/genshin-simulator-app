@@ -17,7 +17,7 @@ export const subOptionParams = Prisma.validator<Prisma.SubOptionDefaultArgs>()({
   include: { subStatus: true },
 });
 
-export type subOption = Prisma.SubOptionGetPayload<typeof subOptionParams>;
+export type SubOption = Prisma.SubOptionGetPayload<typeof subOptionParams>;
 
 export const artifacterParams =
   Prisma.validator<Prisma.ArtifacterDefaultArgs>()({

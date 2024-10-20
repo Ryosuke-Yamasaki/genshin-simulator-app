@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/db/auth";
 import { redirect } from "next/navigation";
-import { getArtifactersByUser } from "./lib/prisma";
+import { getArtifactersByUser } from "@/lib/db/artifact/prisma";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
 

@@ -3,13 +3,13 @@
 import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { imageState, previewState } from "@/app/artifact-scanner/state";
+import { imageState, previewState } from "@/lib/store/state";
 import Image from "next/image";
 import FormWrapper from "./form-wrapper";
-import FormLabel from "./ui/form-label";
 import { useFormState } from "react-dom";
-import { importArtifact } from "../actions";
 import { Button } from "@/components/ui/button";
+import { importArtifact } from "../actions/importArtifact/action";
+import { Label } from "@/components/ui/label";
 
 const ImageUploadForm = () => {
   const [preview, setPreview] = useRecoilState(previewState);
@@ -37,7 +37,12 @@ const ImageUploadForm = () => {
       <form action={formAction}>
         <div className="space-y-4">
           <div>
-            <FormLabel htmlFor="file" labelName="画像の選択" />
+            <Label
+              htmlFor="file"
+              className="block text-sm font-medium text-gray-700"
+            >
+              画像の選択
+            </Label>
             <Input
               id="file"
               name="file"
@@ -48,7 +53,9 @@ const ImageUploadForm = () => {
           </div>
           {preview && (
             <div className="mt-4">
-              <FormLabel labelName="プレビュー" />
+              <Label className="block text-sm font-medium text-gray-700">
+                画像の選択
+              </Label>
               <Image
                 src={preview}
                 alt="プレビュー"

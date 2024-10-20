@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef, FilterFnOption } from "@tanstack/react-table";
-import { Artifacter, subOption } from "../types/prisma";
+
 import { Button } from "@/components/ui/button";
 import {
   CaretDownIcon,
@@ -9,9 +9,10 @@ import {
   CaretUpIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { subStatuses } from "@/app/data/artifact-data";
-import DataTableSubStatusSortOption from "./ui/data-table-sub-status-sort-option";
+import DataTableSubStatusSortOption from "./data-table-sub-status-sort-option";
 import { cn } from "@/lib/utils";
+import { subStatuses } from "@/app/constants/artifact-data";
+import { Artifacter, SubOption } from "@/lib/db/artifact/type";
 
 const multiSelectFilter: FilterFnOption<Artifacter> = (
   row,
@@ -87,7 +88,7 @@ export const columns: ColumnDef<Artifacter>[] = [
     accessorFn: (row) => row.subOptions,
     header: ({ table }) => <DataTableSubStatusSortOption table={table} />,
     cell: ({ row, table }) => {
-      const subOptions = row.getValue("subOptions") as subOption[];
+      const subOptions = row.getValue("subOptions") as SubOption[];
       const cleanedSubOptions = subOptions.map((option) => ({
         ...option,
         value: option.subStatus.isPercentage

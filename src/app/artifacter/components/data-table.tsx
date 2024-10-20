@@ -20,12 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DataTablePagination from "./ui/data-table-pagination";
+import DataTablePagination from "./data-table-pagination";
 import { useState } from "react";
-import { DataTableFilterSelector } from "./ui/data-table-filter-selector";
-import { Button } from "@/components/ui/button";
-import { Artifacter } from "../types/prisma";
-import DataTableFilterOption from "./ui/data-table-filter-option";
+import DataTableFilterOption from "./data-table-filter-option";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

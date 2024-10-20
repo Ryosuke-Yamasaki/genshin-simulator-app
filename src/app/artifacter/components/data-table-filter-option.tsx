@@ -1,7 +1,7 @@
 import { Table } from "@tanstack/react-table";
 import { DataTableFilterSelector } from "./data-table-filter-selector";
-import { Artifacter } from "../../types/prisma";
 import { Button } from "@/components/ui/button";
+import { Artifacter } from "@/lib/db/artifact/type";
 
 interface DataTableFilterOptionProps<TData> {
   table: Table<TData>;
