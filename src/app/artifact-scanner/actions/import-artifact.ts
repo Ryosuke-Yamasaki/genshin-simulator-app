@@ -5,13 +5,13 @@ import {
   calculateScore,
   extractTextFromImage,
   transformSubOptions,
-} from "../../../../lib/db/artifact/functions";
+} from "@/lib/db/artifact/functions";
 import {
   findArtifactSet,
   findArtifactType,
   findMainStatusId,
   postArtifacter,
-} from "../../../../lib/db/artifact/prisma";
+} from "@/lib/db/artifact/prisma";
 import { auth } from "@/lib/db/auth";
 
 export const importArtifact = async (
