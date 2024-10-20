@@ -2,8 +2,8 @@
 
 import { CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { imageState, previewState } from "@/lib/store/state";
+import { useRecoilState } from "recoil";
+import { previewState } from "@/lib/store/state";
 import Image from "next/image";
 import FormWrapper from "./form-wrapper";
 import { useFormState } from "react-dom";
@@ -13,12 +13,10 @@ import { Label } from "@/components/ui/label";
 
 const ImageUploadForm = () => {
   const [preview, setPreview] = useRecoilState(previewState);
-  const setImage = useSetRecoilState(imageState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string);
