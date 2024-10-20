@@ -8,7 +8,7 @@ import Image from "next/image";
 import FormWrapper from "./form-wrapper";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { importArtifact } from "../actions/importArtifact/action";
+import { importArtifact } from "@/app/artifact-scanner/actions/import-artifact";
 import { Label } from "@/components/ui/label";
 
 const ImageUploadForm = () => {

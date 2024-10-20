@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import DataTableSubStatusSortOption from "./data-table-sub-status-sort-option";
 import { cn } from "@/lib/utils";
-import { subStatuses } from "@/app/constants/artifact-data";
+import { subStatuses } from "@/app/constants/artifact";
 import { Artifacter, SubOption } from "@/lib/db/artifact/type";
 
 const multiSelectFilter: FilterFnOption<Artifacter> = (
