@@ -64,7 +64,7 @@ export const columns: ColumnDef<Artifacter>[] = [
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        onClick={column.getToggleSortingHandler()}
         className="pl-0 py-0"
       >
         スコア

@@ -39,9 +39,7 @@ const DataTableSubStatusSortOption = <TData,>({
           .map((column) => (
             <DropdownMenuCheckboxItem
               key={column.id}
-              onCheckedChange={() => {
-                column.toggleSorting(column.getIsSorted() === "asc");
-              }}
+              onCheckedChange={column.getToggleSortingHandler()}
               onSelect={(e) => e.preventDefault()}
               className="flex justify-between p-2"
             >
