@@ -15,7 +15,11 @@ export const extractTextFromImage = async (
 
     const result = await worker.recognize(croppedImage);
 
-    return result.data.text.replace(/’/g, "'").replace(/:/g, "").trim();
+    return result.data.text
+      .replace(/’/g, "'")
+      .replace(" |", "")
+      .replace(/:/g, "")
+      .trim();
   } catch (error) {
     throw new Error(`Failed to extract text from image.:${error}`);
   }
