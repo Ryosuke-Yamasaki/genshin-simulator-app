@@ -73,24 +73,32 @@ export const findArtifactType = async (name: string) => {
   }
 };
 
-export const postArtifacter = async (
-  userId: string,
-  artifactId: string,
-  mainOptionId: number,
-  score: number,
-  subOptions: SubOption[]
-) => {
-  const Artifacter = await prisma.artifacter.create({
-    data: {
-      userId,
-      artifactId,
-      mainOptionId,
-      score,
-      subOptions: { create: subOptions },
-    },
-    include: artifacterParams.include,
-  });
-  return Artifacter;
+export const postArtifacter = async (importArtifacts: Artifacter[]) => {
+  try {
+    const artifacters = await prisma.$transaction(
+      importArtifacts.map(
+        ({ userId, artifactId, mainOptionId, score, subOptions }) =>
+          prisma.artifacter.create({
+            data: {
+              userId,
+              artifactId,
+              mainOptionId,
+              score,
+              subOptions: { create: subOptions },
+            },
+            include: artifacterParams.include,
+          })
+      )
+    );
+
+    if (!artifacters || artifacters.length === 0) {
+      throw new Error("No artifacters were created in the transaction.");
+    }
+
+    return artifacters;
+  } catch (error) {
+    throw new Error(`Error fetching Artifacters:${error}`);
+  }
 };
 
 export const getArtifactersByUser = async (id: string) => {
