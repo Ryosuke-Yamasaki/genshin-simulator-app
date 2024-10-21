@@ -1,6 +1,6 @@
 import { auth } from "@/lib/db/auth";
 import { redirect } from "next/navigation";
-import ImageUploadForm from "./components/image-upload-form";
+import ImageUploadForm from "./components/image-upload/form";
 import PreviewArtifact from "./components/preview-artifact";
 
 const ArtifactScannerPage = async () => {
