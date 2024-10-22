@@ -32,9 +32,32 @@ export const columns: ColumnDef<Artifacter>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "artifactId",
+    header: "artifactId",
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     id: "artifact",
     accessorFn: (row) => row.artifact.nameJp,
     header: "名前",
+    cell: ({ row }) => {
+      const artifactId = row.getValue("artifactId") as string;
+      const artifact = row.getValue("artifact") as string;
+
+      return (
+        <div className="flex space-x-1">
+          <Image
+            src={`https://ayuqpemrfahcziukatay.supabase.co/storage/v1/object/public/image/artifact/artifact_${artifactId}.png`}
+            alt="statusIcon"
+            width={32}
+            height={32}
+            className="w-5 h-5"
+          />
+          <div>{artifact}</div>
+        </div>
+      );
+    },
     enableSorting: false,
   },
   {
