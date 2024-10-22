@@ -26,38 +26,24 @@ export const importArtifact = async (
       const data = await file.arrayBuffer();
       const buffer = Buffer.from(data);
 
-      const regions = {
-        set: { left: 1335, top: 635, width: 440, height: 30 },
-        type: { left: 1335, top: 190, width: 220, height: 30 },
-        mainOption: { left: 1335, top: 267, width: 273, height: 30 },
-        subOptions: [
-          { left: 1355, top: 475, width: 445, height: 39 },
-          { left: 1355, top: 514, width: 445, height: 39 },
-          { left: 1355, top: 553, width: 445, height: 39 },
-          { left: 1355, top: 592, width: 445, height: 39 },
-        ],
-      };
+      const textData = (await extractTextFromImage(buffer)) as string[];
 
-      const [set, type, mainOption, ...subOptions] = await Promise.all([
-        extractTextFromImage(buffer, regions.set),
-        extractTextFromImage(buffer, regions.type),
-        extractTextFromImage(buffer, regions.mainOption),
-        ...regions.subOptions.map((region) =>
-          extractTextFromImage(buffer, region)
-        ),
+      const artifactSet = await findArtifactSet(textData[0]);
+      const artifactType = await findArtifactType(textData[1]);
+
+      const formattedSubOptions = await transformSubOptions([
+        textData[3],
+        textData[4],
+        textData[5],
+        textData[6],
       ]);
-
-      const artifactSet = await findArtifactSet(set);
-      const artifactType = await findArtifactType(type);
-
-      const formattedSubOptions = await transformSubOptions([...subOptions]);
 
       const session = await auth();
       if (!session || !session.user?.id) redirect("/");
       const score = calculateScore(formattedSubOptions);
 
       const mainOptionId = await findMainStatusId(
-        mainOption,
+        textData[2],
         artifactSet.quality,
         artifactType.id
       );
