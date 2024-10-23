@@ -10,6 +10,7 @@ import { useFormState } from "react-dom";
 import { importArtifact } from "@/app/artifact-scanner/actions/import-artifact";
 import { Label } from "@/components/ui/label";
 import SubmitButton from "./submit-button";
+import PreviewImage from "./preview-image";
 
 const ImageUploadForm = () => {
   const [previews, setPreviews] = useRecoilState(previewState);
@@ -47,26 +48,7 @@ const ImageUploadForm = () => {
                 onChange={handleChange}
               />
             </div>
-            {previews && (
-              <div>
-                <Label className="block text-sm font-medium text-gray-700">
-                  画像のプレビュー
-                </Label>
-                <div className="mt-1 space-y-2">
-                  {previews.map((preview, i) => (
-                    <div key={i}>
-                      <Image
-                        src={preview}
-                        alt={`プレビュー ${i + 1}`}
-                        width={500}
-                        height={500}
-                        className="max-w-full h-auto rounded-lg border border-gray-200"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <PreviewImage />
           </div>
           <CardFooter className="px-0 pt-6">
             <SubmitButton />

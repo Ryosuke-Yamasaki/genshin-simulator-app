@@ -56,7 +56,6 @@ export const importArtifact = async (
         subOptions: formattedSubOptions,
       };
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       return importArtifacts;
     })
   );
